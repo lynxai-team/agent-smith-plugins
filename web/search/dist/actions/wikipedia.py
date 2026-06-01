@@ -5,6 +5,7 @@ description: Searches Wikipedia and returns a summary or full text of the given 
 arguments:
     query:
         description: The topic to search on Wikipedia.
+        required: true
     
 """
 import sys

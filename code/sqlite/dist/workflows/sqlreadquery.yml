@@ -1,0 +1,9 @@
+tool:
+  description: Read data in the database by asking a question in natural language and get the data. This tool is aware of the database schema and can read everything, feel free to ask any question about the database.
+  arguments:
+    prompt:
+        description: The question to ask about data
+steps:
+  - adaptater: db-getschema
+  - task: db-create-query
+  - action: db-execute-read-query

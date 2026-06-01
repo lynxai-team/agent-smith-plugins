@@ -9,8 +9,9 @@ prompt: |-
 
     {instructions}
 ctx: 32768
-modelpack:
-    default: mistral-small
+model:
+    name: qwen30b
+    temperature: chatml-tools
 inferParams:
     max_tokens: 8192
     top_k: 0.0

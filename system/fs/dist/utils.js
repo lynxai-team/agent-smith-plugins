@@ -1,6 +1,28 @@
 import * as fs from 'fs';
 import path from "path";
 
+function parsePath(args, options) {
+    let content;
+    let filepath;
+    if (args?.path && args?.content) {
+        content = args.content;
+        filepath = args.path;
+    }
+    if (options?.variables?.path && options?.variables?.content) {
+        content = options.variables.content;
+        filepath = options.variables.path;
+    }
+    if (!filepath) {
+        console.log("ARGS", args);
+        console.log("OPTS", options);
+        throw new Error("writetofile: no path provided");
+    }
+    if (options?.variables?.workspace) {
+        fp = path.join(options.variables.workspace, fp);
+    }
+    return fp;
+}
+
 async function lsdir(args, options) {
     let dirPath = "";
     if (Array.isArray(args)) {
@@ -53,4 +75,5 @@ function isPathDirectoryOrFile(filePath) {
 export {
     isPathDirectoryOrFile,
     lsdir,
+    parsePath,
 };

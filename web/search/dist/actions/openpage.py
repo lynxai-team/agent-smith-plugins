@@ -4,6 +4,7 @@ description: Retrieve a webpage's content
 arguments:
     url:
         description: The url of the web page to read
+        required: true
 """
 
 import asyncio
@@ -13,11 +14,13 @@ from crawl4ai.async_configs import BrowserConfig, CrawlerRunConfig
 
 
 async def main():
+    #print("SCRAP ARGS",sys.argv )
+    #return
     if len(sys.argv) < 2:
         raise ValueError("Provide an url")
     _run_config: dict = dict(
-        verbose=False,
-        log_console=False,
+        verbose=True,
+        log_console=True,
         word_count_threshold=10,
         remove_overlay_elements=True,
         process_iframes=True,
@@ -25,7 +28,6 @@ async def main():
         delay_before_return_html=1,
         wait_for="js:() => window.loaded === true",
     )
-    #print("SCRAP ARGS",sys.argv )
     url = sys.argv[1]
     for arg in sys.argv[2:]:
         if "=" in arg:

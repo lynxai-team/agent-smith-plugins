@@ -3,15 +3,14 @@ tool:
     arguments:
         prompt: 
             description: The search query
+            required: true
 description: Search tool
+category: "web/search"
 prompt: |-
     {prompt}
-ctx: 16384
-model:
-    name: qwen4b
-    template: chatml-xmltools
+model: qwen4b
 template:
-  afterSystem: |-
+  system: |-
 
     You are in charge of providing accurate information to the user. Here is your search workflow:
     
@@ -20,10 +19,10 @@ template:
     3. Provide a detailled final answer using all the information gathered.
 inferParams:
   top_k: 20
-  top_p: 0.8
-  min_p: 0.01
+  top_p: 0.85
+  min_p: 0
   temperature: 0.4
 toolsList:
-  - smsearch
-  - open_webpage
+  - ddsearch
+  - openpage
   - wikipedia

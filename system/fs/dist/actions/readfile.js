@@ -19,18 +19,31 @@ async function readFile(fp) {
 }
 
 async function action(args, options) {
-    let fp = "";
-    if (Array.isArray(args)) {
-        fp = args[0];
-    } else {
-        if (typeof args == "string") {
-            fp = args;
-        } else {
-            fp = args.path;
+    let ok = false;
+    //console.log("ARGS", args);
+    //console.log("OPTS", options);
+    if (!(options?.variables?.path)) {
+        throw new Error("provide a path");
+    }
+    let requestedPath = args.path;
+    if (args.path.startsWith("./")) {
+        requestedPath = process.cwd() + args.path.slice(2);
+    }
+    //console.log("RP", requestedPath);
+    const aps = options.variables.path.split(",");
+    for (const ap of aps) {
+        const authorizedPath = [".", "./"].includes(ap) ? process.cwd() : ap;
+        //console.log("Auth path", authorizedPath);
+        if (requestedPath.includes(authorizedPath)) {
+            ok = true;
+            break;
         }
     }
+    if (!ok) {
+        return "unauthorized path " + requestedPath;
+    }
     //console.log("RF FP", fp);
-    return readFile(fp);
+    return readFile(requestedPath);
 }
 
 export { action, readFile };

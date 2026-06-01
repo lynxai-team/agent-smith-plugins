@@ -1,0 +1,3 @@
+steps:
+  - adaptater: db-getschema
+  - agent: runsqliteagent

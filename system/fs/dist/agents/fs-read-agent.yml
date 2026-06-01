@@ -1,10 +1,13 @@
-description: An example agent
+tool:
+    description: Filesystem read and explore agent
+    arguments:
+        prompt: 
+            description: "The operation to perform: open a file, list files in a directory, ask a question about a file"
+description: A read only agent
+category: "system/filesystem"
 prompt: |-
     {prompt}
-ctx: 32768
-model:
-  name: glmflash
-  template: glm-tools
+model: qwen4b
 inferParams:
   top_p: 1
   min_p: 0.01
@@ -19,6 +22,6 @@ mcp:
       - list_directory
       - list_directory_with_sizes
       - read_text_file
-      - read_multiple_files
-      - search_files
+      - read_multiple_files?
+      - search_files?
       - directory_tree?

@@ -1,0 +1,28 @@
+tool:
+    description: Create a database query
+    arguments:
+        prompt: 
+            description: The user question to create a query from
+description: Create an sql query
+type: workflow
+prompt: |-
+    Schema:
+    {schema}
+    
+    Question: {prompt}
+model: text2sql
+template:
+    system: |-
+        You are given a database schema and a natural language question. Generate the SQL query that answers the question.
+
+        Rules:
+        - Use only tables and columns from the provided schema
+        - Use uppercase SQL keywords (SELECT, FROM, WHERE, etc.)
+        - Use SQLite-compatible syntax
+        - Output only the SQL query, no explanations
+inferParams:
+    temperature: 0
+variables:
+    required:
+        schema:
+            description: the database sql schema

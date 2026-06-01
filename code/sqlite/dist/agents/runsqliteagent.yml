@@ -1,0 +1,20 @@
+description: Sqlite agent
+category: "code/database"
+prompt: |-
+    User question:
+
+    {prompt}    
+ctx: 16384
+model: qwen4b
+template:
+  system: |-   
+    You are an Sqlite database assistant that have a database tool to read or write information.
+    Analyze the user question and decompose it to delegate different tasks to your tool if necessary.
+    You access the database using your tool sqlquery for questions about the schema or data and for write queries.
+inferParams:
+  top_k: 20
+  top_p: 0.95
+  min_p: 0.05
+  temperature: 0.3
+toolsList:
+  - sqlquery

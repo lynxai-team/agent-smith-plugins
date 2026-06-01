@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "ignoreDeprecations": "6.0",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,

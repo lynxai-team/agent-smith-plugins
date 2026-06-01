@@ -12,6 +12,7 @@ arguments:
 */
 import fs from 'fs';
 import path from 'path';
+import { parsePath } from '../utils.js';
 
 function writeToFile(filePath, content, isVerbose) {
     const dirPath = path.dirname(filePath);
@@ -31,26 +32,9 @@ function writeToFile(filePath, content, isVerbose) {
 
 async function action(args, options) {
     let isVerbose = options?.verbose || options?.debug;
-    if (args.length < 2) {
-        throw new Error("Provide both a file path and a content string");
-    }
-    let content;
-    let filepath;
-    if (args?.path && args?.content) {
-        content = args.content;
-        filepath = args.path;
-    } else {
-        content = args[1];
-        filepath = args[0];
-    }
-    if (!filepath) {
-        console.log("ARGS", args);
-        console.log("OPTS", options);
-        throw new Error("writetofile: no filepath provided");
-    }
-    //console.log("WRITE", filepath, content);
-    writeToFile(filepath, content, isVerbose);
-    return `Ok: file ${filepath} written`;
+    const fp = parsePath(args, options);
+    writeToFile(fp, content, isVerbose);
+    return `Ok: file ${fp} written`;
 }
 
 export { action, writeToFile };

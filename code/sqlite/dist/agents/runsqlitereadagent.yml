@@ -1,0 +1,23 @@
+description: Sqlite read only agent
+category: "code/database"
+prompt: |-
+    User question:
+
+    {prompt}    
+model: qwen4b
+template:
+  system: |-
+    You are an Sqlite database reader assistant that have a database read tool to get information.
+    Analyze the user question and decompose it to ask different queries to your tool if necessary.
+    You access the database using your tool sqlquery for questions about the schema or data.
+inferParams:
+  top_k: 20
+  top_p: 0.95
+  min_p: 0.05
+  temperature: 0.3
+toolsList:
+  - sqlreadquery
+variables:
+  required:
+    dbpath:
+      description: The database path

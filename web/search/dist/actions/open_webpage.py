@@ -5,9 +5,10 @@ description: Visits a webpage at the given url and reads its content as a markdo
 arguments:
     url:
         description: The url of the page to get the content from
+        required: true
 """
 import sys
 from smolagents.default_tools import VisitWebpageTool
 
-executor = VisitWebpageTool(15000)
+executor = VisitWebpageTool(30000)
 print(executor.forward(sys.argv[1]))

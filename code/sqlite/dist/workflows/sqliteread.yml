@@ -1,0 +1,10 @@
+tool:
+    description: Sqlite database read agent
+    arguments:
+        prompt: 
+            description: The question about the database to create a query from
+        dbpath:
+            description: The database's Sqlite file path
+steps:
+  - adaptater: db-getschema
+  - agent: runsqlitereadagent

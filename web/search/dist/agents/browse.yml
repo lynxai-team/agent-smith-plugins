@@ -1,10 +1,9 @@
 description: Playwright browse agent
+category: "web/search"
 prompt: |-
     {prompt}
 ctx: 32768
-model:
-    name: qwen4b
-    template: chatml-xmltools
+model: qwen4b
 inferParams:
     top_k: 20
     top_p: 0.95

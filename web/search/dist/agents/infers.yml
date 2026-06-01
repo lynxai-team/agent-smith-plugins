@@ -1,18 +1,16 @@
 description: Run a raw inference query with search tools
+category: "web/search"
 prompt: |-
     {prompt}
 ctx: 16384
-model:
-    name: qwen4b
-    template: chatml-xmltools
+model: qwen4b
 template:
-  afterSystem: |-
+  system: |-
     You always use your tools to gather recent and accurate information about the user query. Your answer must be grounded by these information sources
 inferParams:
   top_p: 20
   top_k: 0.8
   min_p: 0
   temperature: 0.6
-  max_tokens: 8192
 toolsList:
   - searchweb
