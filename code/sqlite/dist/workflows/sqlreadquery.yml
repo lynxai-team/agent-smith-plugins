@@ -5,5 +5,5 @@ tool:
         description: The question to ask about data
 steps:
   - adaptater: db-getschema
-  - task: db-create-query
+  - agent: db-create-query
   - action: db-execute-read-query

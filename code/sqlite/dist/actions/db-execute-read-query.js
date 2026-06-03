@@ -10,8 +10,8 @@ import DatabaseConstructor from "better-sqlite3";
 import { executeQueries } from "../utils.js";
 
 async function action(args, options) {
-    console.log("READ ARGS", args);
-    console.log("READ OPTS", options);
+    //console.log("READ ARGS", args);
+    //console.log("READ OPTS", options);
     /*if (!args?.query) {
         throw new Error("db-readquery: provide query argument");
     }*/

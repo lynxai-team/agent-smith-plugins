@@ -1,8 +1,8 @@
 import DatabaseConstructor from "better-sqlite3";
 
 async function action(args, options) {
-    console.log("SCH ARGS", args);
-    console.log("SCH OPTS", options);
+    //console.log("SCH ARGS", args);
+    //console.log("SCH OPTS", options);
     if (args.length < 2) {
         throw new Error("db-getschema: provide a db path and a prompt argument");
     }
@@ -67,9 +67,8 @@ async function action(args, options) {
             sqlSchema += table.indexes + ";\n\n";
         }
     }
-    options.schema = sqlSchema.trim();
-    options.dbpath = dbPath;
-    return { prompt: prompt, options };
+    //options.variables.schema = sqlSchema.trim();
+    return { prompt: prompt, schema: sqlSchema.trim() };
 }
 
 export {

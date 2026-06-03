@@ -10,16 +10,19 @@ prompt: |-
     {schema}
     
     Question: {prompt}
+
+    Important: output ONLY raw SQL code. Example: SELECT * FROM tablename
 model: text2sql
 template:
     system: |-
         You are given a database schema and a natural language question. Generate the SQL query that answers the question.
 
-        Rules:
         - Use only tables and columns from the provided schema
         - Use uppercase SQL keywords (SELECT, FROM, WHERE, etc.)
         - Use SQLite-compatible syntax
-        - Output only the SQL query, no explanations
+    assistant: "```sql\n"
+    stop: 
+        - "```"
 inferParams:
     temperature: 0
 variables:

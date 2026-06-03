@@ -5,5 +5,5 @@ tool:
         description: The question to ask about data or the data to write or update to the database
 steps:
   - adaptater: db-getschema
-  - task: db-create-query
+  - agent: db-create-query
   - action: db-ask-execute-query
