@@ -1,11 +1,11 @@
 # Agent Smith Plugins
 
-Plugins for the [Agent Smith](https://github.com/synw/agent-smith) terminal client. This repository contains a collection of feature extensions organized into four categories: **Documentation**, **Code Management**, **System Utilities**, and **Web Capabilities**.
+Plugins for the [Agent Smith](https://github.com/lynxai-team/agent-smith) terminal client. This repository contains a collection of feature extensions organized into three categories: **Code Management**, **System Utilities**, and **Web Capabilities**.
 
 ### Documentation for Humans
 
-- **Full Documentation**: [https://synw.github.io/agent-smith/plugins](https://synw.github.io/agent-smith/plugins) — Complete plugin documentation for users
-- **Core Framework**: [Agent Smith](https://github.com/synw/agent-smith) — Runtime, CLI, and core packages
+- **Full Documentation**: [https://lynxai-team.github.io/agent-smith/plugins](https://lynxai-team.github.io/agent-smith/plugins) — Complete plugin documentation for users
+- **Core Framework**: [Agent Smith](https://github.com/lynxai-team/agent-smith) — Runtime, CLI, and core packages
 
 ### Documentation for AI Agents
 
@@ -14,32 +14,26 @@ Plugins for the [Agent Smith](https://github.com/synw/agent-smith) terminal clie
 
 ## Plugins Overview
 
-### 📝 Documentation
-
-| Plugin | Description | Documentation |
-|--------|-------------|---------------|
-| **autodoc** | AI-powered documentation Q&A system. Loads pre-packaged documentation fragments and answers questions using the qwen35b model with 32k context window. | [doc](https://synw.github.io/agent-smith/plugins/autodoc) |
-
 ### 💻 Code Management
 
-| Plugin | Description | Documentation |
-|--------|-------------|---------------|
-| **git** | Git operations with AI-powered commit message generation. Supports diff analysis, commit workflows, and package-specific commits through 9 specialized agents. | [doc](https://synw.github.io/agent-smith/plugins/code/git) |
-| **sqlite** | SQLite database operations including schema extraction, read-only queries, and confirmed read/write execution. Features workflow orchestration with AI agent support. | [doc](https://synw.github.io/agent-smith/plugins/code/sqlite) |
+| Plugin | Version | Description | Documentation |
+|--------|---------|-------------|---------------|
+| **git** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-git)](https://www.npmjs.com/package/@agent-smith/feat-git) | Git operations with AI-powered commit message generation. Supports diff analysis, commit workflows, and package-specific commits through 9 specialized agents. | [doc](https://lynxai-team.github.io/agent-smith/plugins/code/git) |
+| **sqlite** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-sqlite)](https://www.npmjs.com/package/@agent-smith/feat-sqlite) | SQLite database operations including schema extraction, read-only queries, and confirmed read/write execution. Features workflow orchestration with AI agent support. | [doc](https://lynxai-team.github.io/agent-smith/plugins/code/sqlite) |
 
 ### ⚙️ System Utilities
 
-| Plugin | Description | Documentation |
-|--------|-------------|---------------|
-| **fs** | Filesystem operations (read, write, list directories) with path authorization security checks. Provides read-only and read/write agent configurations for safe file interaction. | [doc](https://synw.github.io/agent-smith/plugins/filesystem) |
-| **shell** | Sandboxed command execution in Docker containers using SimpleBox (general shell) and CodeBox (Python). Includes security evaluation, complexity routing, and script generation tasks. | [doc](https://synw.github.io/agent-smith/plugins/shell) |
+| Plugin | Version | Description | Documentation |
+|--------|---------|-------------|---------------|
+| **fs** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-fs)](https://www.npmjs.com/package/@agent-smith/feat-fs) | Filesystem operations (read, write, list directories) with path authorization security checks. Provides read-only and read/write agent configurations for safe file interaction. | [doc](https://lynxai-team.github.io/agent-smith/plugins/filesystem) |
+| **shell** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-shell)](https://www.npmjs.com/package/@agent-smith/feat-shell) | Sandboxed command execution in Docker containers using SimpleBox (general shell) and CodeBox (Python). Includes security evaluation, complexity routing, and script generation tasks. | [doc](https://lynxai-team.github.io/agent-smith/plugins/shell) |
 
 ### 🌐 Web Capabilities
 
-| Plugin | Description | Documentation |
-|--------|-------------|---------------|
-| **search** | Multi-backend web search with support for DuckDuckGo, smolagents, crawl4ai (with JS rendering), and Wikipedia. Includes browser automation via Playwright and inference augmentation agents. | [doc](https://synw.github.io/agent-smith/plugins/search) |
-| **video** | YouTube video transcript extraction and AI chat interaction over video content. Supports configurable model parameters for transcript-based conversations. | [doc](https://synw.github.io/agent-smith/plugins/video) |
+| Plugin | Version | Description | Documentation |
+|--------|---------|-------------|---------------|
+| **search** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-search)](https://www.npmjs.com/package/@agent-smith/feat-search) | Multi-backend web search with support for DuckDuckGo, smolagents, crawl4ai (with JS rendering), and Wikipedia. Includes browser automation via Playwright and inference augmentation agents. | [doc](https://lynxai-team.github.io/agent-smith/plugins/search) |
+| **video** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-video)](https://www.npmjs.com/package/@agent-smith/feat-video) | YouTube video transcript extraction and AI chat interaction over video content. Supports configurable model parameters for transcript-based conversations. | [doc](https://lynxai-team.github.io/agent-smith/plugins/video) |
 
 ---
 
@@ -60,9 +54,9 @@ Plugins for the [Agent Smith](https://github.com/synw/agent-smith) terminal clie
 
 All plugins depend on:
 - `@agent-smith/core` — Workflow execution engine, agent runtime, framework integration
-- `@agent-smith/cli` — CLI runtime and utilities (used by autodoc, git, sqlite, fs, shell)
+- `@agent-smith/cli` — CLI runtime and utilities (used by git, sqlite, fs, shell)
 
 ## Related Repositories
 
-- [`@agent-smith/core`](https://github.com/synw/agent-smith) — Core framework providing workflow engine, agent runtime, and tool integration
-- [`@agent-smith/cli`](https://github.com/synw/agent-smith) — Terminal client that consumes these plugins
+- [`@agent-smith/core`](https://github.com/lynxai-team/agent-smith) — Core framework providing workflow engine, agent runtime, and tool integration
+- [`@agent-smith/cli`](https://github.com/lynxai-team/agent-smith) — Terminal client that consumes these plugins
