@@ -19,8 +19,8 @@ async def main():
     if len(sys.argv) < 2:
         raise ValueError("Provide an url")
     _run_config: dict = dict(
-        verbose=True,
-        log_console=True,
+        verbose=False,
+        log_console=False,
         word_count_threshold=10,
         remove_overlay_elements=True,
         process_iframes=True,
