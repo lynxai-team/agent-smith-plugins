@@ -12,28 +12,18 @@ arguments:
 */
 import fs from 'fs';
 import path from 'path';
-import { parsePath } from '../utils.js';
-
-function writeToFile(filePath, content, isVerbose) {
-    const dirPath = path.dirname(filePath);
-    if (!fs.existsSync(dirPath)) {
-        throw new Error(`The directory ${dirPath} does not exist`);
-    }
-    try {
-        // Write content to file
-        fs.writeFileSync(filePath, content);
-        if (isVerbose) {
-            console.log(`File ${filePath} written`);
-        }
-    } catch (e) {
-        throw new Error(`writing file ${filePath}, ${e}`);
-    }
-}
+import { parsePath, writeToFile } from '../utils.js';
 
 async function action(args, options) {
-    let isVerbose = options?.verbose || options?.debug;
-    const fp = parsePath(args, options);
-    writeToFile(fp, content, isVerbose);
+    const { ok, msg } = parsePath(args, options);
+    if (!ok) {
+        return msg;
+    }
+    if (!args?.content) {
+        return "[Error]: provide a file content";
+    }
+    const fp = msg;
+    writeToFile(fp, args.content, options?.debug ?? false);
     return `Ok: file ${fp} written`;
 }
 

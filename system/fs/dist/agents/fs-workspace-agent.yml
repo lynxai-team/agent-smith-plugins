@@ -7,19 +7,22 @@ category: "system/filesystem"
 prompt: "{prompt}"
 model: qwen4b
 template:
-    system: |-
-        
+    system: |-   
         You are an AI filesystem assistant. You are equiped with tools to operate on the filesystem.
+
+        {file:../fragments/workspace.md}
 inferParams:
     top_k: 20
     top_p: 0.7
     min_p: 0
     temperature: 0.2
-toolsList:
-    - lsdir # auto
-    - readfile # auto
-    - writetofile?
 variables:
-    required:
-        path:
-            description: "The autorized paths: ex: path/1,path/2"
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+    - lsdir
+    - dirfiles?
+    - readfile?
+    - edit-search-replace?
+    - writetofile?

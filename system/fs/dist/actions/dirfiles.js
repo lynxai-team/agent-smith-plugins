@@ -3,12 +3,13 @@
 name: dirfiles
 description: "Read files in a directory: returns the content of all the files in a given directory, excluding hidden files"
 arguments:
-    dirPath:
+    path:
         description: The path of the directory to read
         required: true
 */
 import fs from 'fs';
 import path from 'path';
+import { parsePath } from '../utils.js';
 
 async function readDirectory(dirPath, options) {
   if (options?.debug || options?.verbose) {
@@ -30,28 +31,26 @@ async function readDirectory(dirPath, options) {
   return result;
 }
 
-async function action(args) {
+async function action(args, options) {
   const res = {};
-  let dirPaths = [];
-  //console.log("DIRF ARGS", typeof args, args);
-  if (Array.isArray(args)) {
-    dirPaths = args;
-  } else {
-    dirPaths = [args.dirPath];
+  const { ok, msg } = parsePath(args, options);
+  if (!ok) {
+    return msg;
   }
-  for (const arg of dirPaths) {
-    try {
-      const data = await readDirectory(arg);
-      res[arg] = data;
-    } catch (err) {
-      return { ok: false, data: `Error reading directory: ${err}` };
-    }
+  try {
+    const data = await readDirectory(msg);
+    res[msg] = data;
+  } catch (err) {
+    return { ok: false, data: `Error reading directory: ${err}` };
   }
   const files = [];
   for (const [dirname, data] of Object.entries(res)) {
     let safeDirname = dirname;
     if (dirname.endsWith("/")) {
       safeDirname = dirname.substring(0, dirname.length - 1);
+    }
+    if (options?.variables?.workspace) {
+      safeDirname = safeDirname.replace(options.variables.workspace, "/workspace");
     }
     for (const [filename, content] of Object.entries(data)) {
       let txt = `File: ${safeDirname}/${filename}`;
