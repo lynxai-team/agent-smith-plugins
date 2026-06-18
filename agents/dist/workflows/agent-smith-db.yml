@@ -1,0 +1,9 @@
+tool:
+  description: and agent to retrieve configuration data in the Agent Smith config database
+  arguments:
+    prompt:
+        description: the question to ask about the data
+steps:
+  - adaptater: agent-smith-db-getschema
+  - agent: agent-smith-sql
+  - action: db-execute-read-query

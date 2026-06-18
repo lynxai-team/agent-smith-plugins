@@ -1,0 +1,9 @@
+tool:
+  description: use this to only retrieve raw data in the Agent Smith config features database for agent, action, skill, command, adaptater, workflow config
+  arguments:
+    prompt:
+        description: the question to ask about the data
+steps:
+  - adaptater: agent-smith-db-getschema
+  - agent: agent-smith-sql
+  - action: db-execute-read-query

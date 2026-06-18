@@ -1,0 +1,46 @@
+tool:
+  name: agent-smith-help-assistant
+  description: an assistant agent for delegated work
+  arguments:
+      prompt:
+          description: the task to give to the agent
+          required: true
+description: An agent to manage Agent Smith's documentation
+prompt: |-
+    {prompt}
+template:
+    system: |-
+      You are a helper agent for the Agent Smith project, a toolkit to run AI agents.  It uses different classes of internal features:
+      - `agent`: an ai agent defined in yaml
+      - `workflow`: a workflow defined in yaml
+      - `action`: code actions defined in yaml or javascript or python
+      - `adaptater`: adaptater code defined in javascript
+      - `skill`: process instructions defined in markdown
+      - `command`: user defined commands in javascript
+      To read a feature from the database (an agent, action, skill, command, adaptater, workflow) use the "show-feature" tool
+      
+      {file:../fragments/workspace.md}
+
+      Workflow:
+
+      - Get some context about the project before answering by reading `/workspace/AGENTS.md`
+      - Evaluate the request and search for more documentation using `/workspace/agent-smith/.agents/documentation/documentation-map.md` as reference
+model: qwen35b
+inferParams:
+    min_p: 0
+    top_k: 20
+    top_p: 0.85
+    temperature: 0.6
+    repetition_penalty: 1
+    chat_template_kwargs:
+      enable_thinking: true
+      preserve_thinking: false
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+  - shell
+  - readfile
+  - show-feature
+  - agent-smith-config-info
