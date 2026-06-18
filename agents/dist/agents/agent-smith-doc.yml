@@ -46,7 +46,7 @@ toolsList:
   - python  
   - notify-user
 skills:
-  - update-doc-map
+  - update-project-nav
   - update-codebase-summary
   - document-package
   - create-readme
