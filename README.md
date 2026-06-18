@@ -1,6 +1,6 @@
 # Agent Smith Plugins
 
-Plugins for the [Agent Smith](https://github.com/lynxai-team/agent-smith) terminal client. This repository contains a collection of feature extensions organized into three categories: **Code Management**, **System Utilities**, and **Web Capabilities**.
+Plugins for the [Agent Smith](https://github.com/lynxai-team/agent-smith) terminal client. This repository contains a collection of feature extensions organized into four categories: **AI Agents**, **Code Management**, **System Utilities**, and **Web Capabilities**.
 
 ### Documentation for Humans
 
@@ -13,6 +13,12 @@ Plugins for the [Agent Smith](https://github.com/lynxai-team/agent-smith) termin
 - [.agents/documentation/codebase-summary.md](./.agents/documentation/codebase-summary.md): codebase navigation
 
 ## Plugins Overview
+
+### 🤖 AI Agents
+
+| Plugin | Version | Description | Documentation |
+|--------|---------|-------------|---------------|
+| **agents** | [![npm](https://img.shields.io/npm/v/@agent-smith/feat-agents)](https://www.npmjs.com/package/@agent-smith/feat-agents) | Multi-agent coordination system with 16 specialized agents (coordinator, search, code, doc, sql, help variants), 4 workflows, and 15+ skills for task management. Provides context helper fragments and collaborative agent orchestration. | [doc](https://lynxai-team.github.io/agent-smith/plugins/agents) |
 
 ### 💻 Code Management
 
@@ -52,9 +58,14 @@ Plugins for the [Agent Smith](https://github.com/lynxai-team/agent-smith) termin
 
 ## Dependencies
 
-All plugins depend on:
-- `@agent-smith/core` — Workflow execution engine, agent runtime, framework integration
-- `@agent-smith/cli` — CLI runtime and utilities (used by git, sqlite, fs, shell)
+Plugins have varying dependencies based on their functionality:
+- **git**: Uses `@agent-smith/cli`, `commander`, `@inquirer/prompts`, `@inquirer/select`
+- **sqlite**: Uses `@agent-smith/cli`, `better-sqlite3`, `@inquirer/prompts`, `@inquirer/select`
+- **fs**: Uses Node.js built-in modules (`fs`, `path`)
+- **shell**: Uses `@boxlite-ai/boxlite` for Docker containerized execution
+- **search**: Uses `ddgs`, `smolagents`, `crawl4ai`, `playwright`, `youtube_transcript_api`
+- **video**: Uses `youtube_transcript_api`
+- **agents**: No external dependencies — agents, workflows, and skills are loaded by the core framework
 
 ## Related Repositories
 

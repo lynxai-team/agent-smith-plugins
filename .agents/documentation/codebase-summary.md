@@ -1,11 +1,11 @@
 # @agent-smith/plugins
 
 ## Summary
-Agent Smith plugins repository providing a collection of feature extensions for the Agent Smith CLI, organized into four categories: documentation (autodoc), code management (git, sqlite), system utilities (fs, shell), and web capabilities (search, video).
+Agent Smith plugins repository providing a collection of feature extensions for the Agent Smith CLI, organized into four categories: AI agents (agents), code management (git, sqlite), system utilities (fs, shell), and web capabilities (search, video).
 
 ## Dependencies
 - `@agent-smith/core` — workflow execution engine, agent runtime, framework integration (used by all plugins)
-- `@agent-smith/cli` — CLI runtime and utilities (used by autodoc, git, sqlite, fs, shell)
+- `@agent-smith/cli` — CLI runtime and utilities (used by git, sqlite, fs, shell, agents)
 - External: `commander` — CLI command definition and argument handling (git plugin)
 - External: `better-sqlite3` — SQLite database driver (sqlite plugin)
 - External: `@inquirer/prompts`, `@inquirer/select` — interactive prompts (git, sqlite plugins)
@@ -18,7 +18,10 @@ Agent Smith plugins repository providing a collection of feature extensions for 
 - Agent Smith CLI (`@agent-smith/cli`) — consumes all plugins to provide feature extensions via terminal client commands
 
 ## Entry Points
-- `autodoc/dist/tasks/autodoc.yml` — Documentation Q&A task using pre-packaged docs with qwen35b model
+- `agents/dist/agents/*.yml` — 16 agent configurations: coordinator, assistant, search, code, doc, sql, help variants (qwen35b/qwen4b models)
+- `agents/dist/workflows/*.yml` — 4 workflow definitions: config info, DB queries, Q&A, vision tasks
+- `agents/dist/skills/*/SKILL.md` — 15+ skill modules for task creation, execution, documentation, and project management
+- `agents/dist/fragments/*.md` — Context helper fragments: workspace info and context file references
 - `code/git/dist/cmds/commit.js` — Git commit command with AI-powered message generation
 - `code/sqlite/dist/adaptaters/db-getschema.js` — SQLite schema extraction; `dist/actions/db-execute-read-query.js` and `db-ask-execute-query.js` for query execution
 - `system/fs/dist/main.js` — Core filesystem functions (lsdir, readFile, writeToFile) with path authorization
@@ -29,9 +32,12 @@ Agent Smith plugins repository providing a collection of feature extensions for 
 ## Key Files
 | File | Purpose |
 |------|---------|
-| **autodoc** | |
-| `dist/tasks/autodoc.yml` | Documentation Q&A task: loads documentation fragments, configures qwen35b model (32k ctx) |
-| `dist/fragments/documentation.md`, `.xml` | Pre-packaged terminal client documentation for AI consumption |
+| **agents** | |
+| `dist/agents/*.yml` | 16 agent definitions: coordinator (agent-smith), assistant, search, code, doc, sql, help variants with tool access |
+| `dist/agents/agent-smith.yml` | Main coordinator agent: orchestrates team of agents, delegates tasks, uses run-agent tool |
+| `dist/workflows/*.yml` | Workflow definitions for config info, DB queries, Q&A, and vision tasks |
+| `dist/skills/*/SKILL.md` | Task management skills: create-task, execute-task, document-package, create-readme, update-codebase-summary, etc. |
+| `dist/fragments/workspace.md`, `ctx-helper-files.md` | Context helper fragments providing workspace info and file references for agents |
 | **code/git** | |
 | `dist/cmds/commit.js` | Git commit command handler with AI-generated messages and user action selection |
 | `dist/actions/git_diff.js` | Executes git diff commands returning combined unstaged/staged changes |
@@ -63,6 +69,7 @@ Agent Smith plugins repository providing a collection of feature extensions for 
 
 ## Architecture
 - **Plugin-based extensibility**: Each plugin is an independent package that registers commands, actions, agents, or tasks with the Agent Smith CLI framework via YAML definitions.
+- **Agent coordination**: The `agents` plugin provides a coordinator agent that decomposes tasks and delegates to specialized agents (search, code, doc, sql, help) via tool calls; skills provide reusable knowledge modules for AI coding agents.
 - **Workflow orchestration**: Plugins use YAML-defined workflows to chain actions (shell/DB/search operations) with AI agents (LLM-based generation), enabling multi-step pipelines.
 - **Security-first design**: System plugins enforce path authorization (fs plugin) and sandboxed execution via Docker containers (shell plugin); read-only modes and user confirmation prompts for write operations (sqlite plugin).
 - **Multi-backend support**: Search plugin provides redundant search backends (DuckDuckGo, smolagents, crawl4ai, Wikipedia) with agent-driven orchestration; shell plugin supports general shell and Python execution in isolated environments.
@@ -70,6 +77,7 @@ Agent Smith plugins repository providing a collection of feature extensions for 
 ## Related
 - See `@agent-smith/core` — Core framework providing workflow engine, agent runtime, and tool integration used by all plugins
 - See `@agent-smith/cli` — Terminal client that consumes these plugins to provide feature commands
+- See `agents` ↔ `code/git`, `code/sqlite` — Agents delegate code-related tasks (git operations, database queries) to these plugins' actions and workflows
 - See `agent-smith-plugins/code/git` ↔ `agent-smith-plugins/code/sqlite` — Companion code management plugins with similar YAML workflow patterns
 - See `agent-smith-plugins/system/fs` ↔ `agent-smith-plugins/system/shell` — System utility plugins following shared security and agent configuration patterns
-- See `agent-smith-plugins/web/search` — Web capabilities plugin providing search, crawling, and browser automation tools
+- See `agent-smith-plugins/web/search` — Web capabilities plugin providing search, crawling, and browser automation tools; used by agents plugin's search agent
