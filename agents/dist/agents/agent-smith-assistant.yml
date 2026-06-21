@@ -4,9 +4,9 @@ prompt: |-
     {prompt}
 template:
     system: |-
-      You are Agent Smith assistant, an AI agent. You can run other agents to do jobs using the `run-agent` tool with the agent `agent-smith-assistant`, a fork of yourself.
+      You are Agent Smith assistant, an AI agent
 
-      {file:../fragments/workspace.txt}
+      {file:../fragments/workspace.md}
       {file:../fragments/ctx-helper-files.md}
 model: qwen35b
 inferParams:
@@ -24,8 +24,10 @@ variables:
     workspace:
       description: The local directory path where to operate
 toolsList:
+  - readfile
+  - edit-search-replace
   - shell
   - python
-  - load-skill
-  - read-webpage
   - run-agent
+  - load-skill
+  - load-task

@@ -9,6 +9,7 @@ This skill describes how to execute a task created with `create-task-solo`. A si
 
 ## Task Location
 
+Use the `load-task` tool to load the task.
 Tasks are located in `.agents/tasks/[task-name]/` directory.
 
 ## Task Structure

@@ -11,8 +11,8 @@ This skill describes the workflow to update the project navigation map file (`.a
 
 2. **Detect changes** — Walk the directory tree, identify what has changed since the last update:
    - New/removed repos or packages
-   - New/modified plugins
-   - UI component changes
+   - New/modified modules or components
+   - UI/frontend changes (if applicable)
    - New documentation files
    - Architecture changes (new patterns, dependencies)
 
@@ -21,9 +21,9 @@ This skill describes the workflow to update the project navigation map file (`.a
 ### Section Update Rules
 
 #### 1. Project Overview
-- Update the repos table if repos are added/removed/renamed
+- Update the repos/modules table if components are added/removed/renamed
 - Update the purpose descriptions if functionality changes
-- Keep the 4-column table format: `| Repo | Path | Purpose |`
+- Keep the table format: `| Repo | Path | Purpose |`
 
 #### 2. Architecture Principles
 - Add new principles when architectural patterns emerge
@@ -36,35 +36,35 @@ This skill describes the workflow to update the project navigation map file (`.a
 - Update the prose explanation below the graph
 - Keep the visual format consistent (boxes, arrows, labels)
 
-#### 4. Runtime Packages
-- Add new packages with: Purpose, Key files, Key types/classes
+#### 4. Packages/Modules
+- Add new packages/modules with: Purpose, Key files, Key types/classes
 - Update existing packages if API changes
 - Remove deprecated packages
-- Format: `### @agent-smith/<name> — <short description>` followed by bullet points
+- Format: `### <module-name> — <short description>` followed by bullet points
 
-#### 5. Server
-- Update route table with new/changed routes
+#### 5. Server/API (if applicable)
+- Update route/endpoint tables with new/changed routes
 - Add new handler files
-- Update patterns if confirmation/async flow changes
+- Update patterns if async flow changes
 
-#### 6. Plugins
-- Add new plugins to the table
-- Update plugin categories if reorganized
+#### 6. Plugins/Extensions (if applicable)
+- Add new plugins/extensions to the table
+- Update categories if reorganized
 - Keep format: `| Plugin | Category | Purpose | Key File(s) |`
 
-#### 7. UI
+#### 7. UI/Frontend (if applicable)
 - Update component/service tables
 - Add new themes, apps, or extensions
-- Note any architectural changes (Vue version, PrimeVue updates)
+- Note any architectural changes (framework version updates)
 
-#### 8. Apps
-- Document new apps added to the dashboard
+#### 8. Apps/Extensions (if applicable)
+- Document new apps added to the project
 - Update existing app descriptions if functionality changes
 
 #### 9. Code Snippets
 - Add new patterns for new APIs or features
 - Update existing snippets if API signatures change
-- Keep language-appropriate examples (YAML, JS, TS)
+- Keep language-appropriate examples
 
 #### 10. Navigation Quick Reference
 - Add new task→path mappings
@@ -86,7 +86,7 @@ This skill describes the workflow to update the project navigation map file (`.a
    - Per-module technical details (entry points, key files, dependencies) live in `codebase-summary.md`
    - No redundancy between files
 
-5. **Write the updated file** — Preserve the header note: `> **Purpose**: Single-reference map for AI coding agents...`
+5. **Write the updated file** — Preserve the header note: `> **Purpose**: Single-reference map for AI coding agents to understand, navigate, and modify the <Project Name> codebase.`
 
 ## Rules
 
@@ -95,3 +95,4 @@ This skill describes the workflow to update the project navigation map file (`.a
 - **Preserve format**: Do not change section structure or table formats
 - **Canonical source**: `project-nav.md` is the single source of truth for project overview, architecture, and navigation
 - **Language-agnostic**: Adapt to the project's language and ecosystem
+- **Include only applicable sections**: Server, Plugins, UI, and Apps sections are optional — include only if the project has them

@@ -4,7 +4,10 @@ prompt: |-
     {prompt}
 template:
     system: |-
-      You are Agent Smith, the AI agent for the Agent Smith project, a toolkit to run AI agents. You lead a team of specialized agents. Your job is to organise the workflow and delegate tasks to specialized agents to orchestrate the work. 
+      You are Agent Smith, the AI agent for the Agent Smith project, a toolkit to run AI agents. Your job is to organise the workflow of other agents. As a coordinator you always delegate taks to agents to orchestrate the work. Your job is to coordinate the team of agents. Available agents:
+
+      - `agent-smith-assistant`: a fork of yourself, the default agent. Run it by default to accomplish any task.
+      - `agent-smith-doc`: senior documentation agent for the project
 
       {file:../fragments/workspace.md}
       {file:../fragments/ctx-helper-files.md}
@@ -16,7 +19,7 @@ inferParams:
     top_p: 0.85
     temperature: 0.6
     repetition_penalty: 1
-    presence_penalty: 1.5
+    presence_penalty: 1.2
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true
@@ -26,8 +29,10 @@ variables:
       description: The local directory path where to operate
 toolsList:
   - readfile
-  - writetofile
   - edit-search-replace
   - shell
   - python
-  - agent-smith-doc
+  - run-agent
+  - load-skill
+  - load-task
+  - notify-user

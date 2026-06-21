@@ -39,4 +39,5 @@ toolsList:
   - python
   - run-agent
   - load-skill
+  - load-task
   - notify-user

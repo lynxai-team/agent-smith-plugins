@@ -5,6 +5,8 @@ description: use this to execute a team task (coordinator delegates phases to ex
 
 # Coordinator Agent Instructions (Task Execution)
 
+Use the `load-task` tool to load the task.
+
 ## Your Role
 You are the **Coordinator Agent**. Delegate phases to executor agents.
 

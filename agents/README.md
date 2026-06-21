@@ -63,7 +63,7 @@ lm conf ~/.agent-smith/features/config.yml
 Launch the main coordinator agent:
 
 ```bash
-lm run-agent agent-smith "Create documentation for my project"
+lm agent-smith "Create documentation for my project"
 ```
 
 The coordinator will automatically decompose your request and delegate to specialized agents as needed.

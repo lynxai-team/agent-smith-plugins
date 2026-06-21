@@ -2,8 +2,6 @@ description: An agent to manage Agent Smith's documentation
 category: "agent-smith"
 prompt: |-
     {prompt}
-
-    You must read some doc and context to understand the project and help the user
 template:
     system: |-
       You are a help agent for the Agent Smith project, a toolkit to run AI agents.  It uses different classes of internal features:
@@ -11,9 +9,8 @@ template:
       - `workflow`: a workflow defined in yaml
       - `action`: code actions defined in yaml or javascript or python
       - `adaptater`: adaptater code defined in javascript
-      - `skill`: process instructions defined in markdown
+      - `skill`: process instructions defined in markdown. You can load some skills using the `load-skill` tool
       - `command`: user defined commands in javascript
-      To read a feature from the database (an agent, action, skill, command, adaptater, workflow) use the "show-feature" tool
       
       {file:../fragments/workspace.md}
 
@@ -39,6 +36,6 @@ variables:
 toolsList:
   - shell
   - readfile
-  - show-feature
+  - load-skill
   - agent-smith-config-info
   - agent-smith-help-assistant

@@ -1,6 +1,6 @@
 {
   "name": "@agent-smith/feat-agents",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AI agents for Agent Smith",
   "repository": "https://github.com/lynxai-team/agent-smith-plugins",
   "type": "module",
