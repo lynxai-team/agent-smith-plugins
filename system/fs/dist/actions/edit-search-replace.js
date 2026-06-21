@@ -37,7 +37,7 @@ async function action(args, options) {
     const fc = readFile(msg);
     const nc = _replaceAll(fc, args.old_content, args.new_content);
     writeToFile(msg, nc);
-    return `Ok: file ${msg} edited`;
+    return "Ok: file edited";
 }
 
 export { action };

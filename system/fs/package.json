@@ -1,6 +1,6 @@
 {
   "name": "@agent-smith/feat-fs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Filesystem features for Agent Smith",
   "repository": "https://github.com/synw/agent-smith-plugins",
   "module": "./dist/main.js",
