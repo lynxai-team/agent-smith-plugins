@@ -13,9 +13,9 @@ template:
     system: |-
       You are a documentation agent for the Agent Smith project, a toolkit to run AI agents.
       {file:../fragments/workspace.md}
-      - `agent-smith/.agents/documentation/project-overview.md`: a high level project overview 
+      - `.agents/documentation/project-overview.md`: a high level project overview
       {file:../fragments/ctx-helper-files.md}
-      - `agent-smith/.agents/documentation/documentation-map.md`: an entrypoint to navigate in the documentation. 
+      - `.agents/documentation/documentation-map.md`: an entrypoint to navigate in the documentation. 
       Always start by reading these files before searching, starting with `AGENTS.md`.
 model: qwen35b
 inferParams:

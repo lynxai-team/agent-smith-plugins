@@ -22,22 +22,21 @@ This package is part of the [Agent Smith](https://github.com/lynxai-team/agent-s
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| 🤖 **Coordinator Agent** | Central `agent-smith` agent that decomposes tasks, plans workflows, and delegates to specialized agents via tool calls |
-| 🔍 **Specialized Agents** | 16 pre-configured agents for search, code, documentation, SQL queries, assistance, and help scenarios |
-| ⚡ **Workflow Orchestration** | 4 YAML-defined workflows for config info, database queries, Q&A sessions, and vision tasks |
-| 📋 **Task Management Skills** | 15+ reusable skills for task creation, execution (solo/team), documentation updates, and project management |
-| 🧩 **Context Fragments** | Workspace context helpers that provide agents with project structure awareness |
-| 🔗 **Agent Delegation** | Coordinator can call specialized agents sequentially using the `run-agent` tool |
-| 🎯 **Model Flexibility** | Supports all compatible LLM models with configurable inference parameters |
+- 🤖 **Coordinator Agent** — Central `agent-smith` agent that decomposes tasks, plans workflows, and delegates to specialized agents via tool calls
+- 🔍 **16 Specialized Agents** — Pre-configured agents for search, code, documentation, SQL queries, assistance, help, state tracking, project management, and collaboration
+- ⚡ **4 Workflows** — YAML-defined pipelines for config info retrieval, database queries, Q&A sessions, and vision tasks
+- 📋 **15+ Reusable Skills** — Task creation/execution (solo/team), documentation updates, codebase summaries, and project management
+- 🧩 **Context Fragments** — Workspace context helpers that provide agents with project structure awareness
+- 🔗 **Agent Delegation** — Coordinator calls specialized agents sequentially via the `run-agent` tool
+- 🎯 **Model Flexibility** — Supports all compatible LLM models (qwen35b, qwen4b, etc.) with configurable inference parameters
+- 🛡️ **Security Patterns** — Agents operate within a specified workspace directory with controlled tool access
 
 ---
 
 ## 📦 Installation
 
 ```bash
-# Install via npm (as part of agent-smith-plugins)
+# Install globally via npm
 npm i -g @agent-smith/feat-agents
 ```
 
@@ -53,7 +52,7 @@ plugins:
 Then update your client configuration:
 
 ```bash
-lm conf ~/.agent-smith/features/config.yml
+lm conf
 ```
 
 ---
@@ -67,6 +66,12 @@ lm agent-smith "Create documentation for my project"
 ```
 
 The coordinator will automatically decompose your request and delegate to specialized agents as needed.
+
+For direct inference (bypassing coordination):
+
+```bash
+lm infer "Explain how multi-agent coordination works"
+```
 
 ---
 
@@ -85,7 +90,7 @@ The coordinator will automatically decompose your request and delegate to specia
 
 | Agent | Description |
 |-------|-------------|
-| `agent-smith-search` | Web search and webpage reading agent — uses ddsearch, read-webpage tools |
+| `agent-smith-search` | Web search and webpage reading — uses ddsearch, read-webpage tools |
 | `agent-smith-code` | Code management agent for programming tasks |
 | `agent-smith-doc` | Documentation management agent for project docs |
 | `agent-smith-sql` | Database query agent — generates SQL from natural language questions |
@@ -106,18 +111,22 @@ The plugin includes 4 workflow definitions for multi-step operations:
 
 | Workflow | Purpose |
 |----------|---------|
-| `agent-smith-config-info.yml` | Configuration information retrieval workflows |
-| `agent-smith-db.yml` | Database query orchestration with SQL agent |
-| `q.yml` | Q&A workflow — adapts pre-query then runs inference agent |
-| `vision.yml` | Vision tasks workflow for image/video analysis |
+| `agent-smith-config-info` | Configuration information retrieval workflows |
+| `agent-smith-db` | Database query orchestration with SQL agent |
+| `q` | Q&A workflow — adapts pre-query then runs inference agent |
+| `vision` | Vision tasks workflow for image/video analysis |
 
-Workflows are YAML-defined pipelines that chain actions with AI agents, enabling complex multi-step operations.
+Execute a workflow:
+
+```bash
+lm workflow agent-smith-config-info
+```
 
 ---
 
 ## 🛠️ Skills Reference
 
-The plugin provides 15+ reusable skills for AI coding agents:
+The plugin provides 15+ reusable skills for AI coding agents, loaded via the `load-skill` tool.
 
 ### Task Creation
 | Skill | Description |
@@ -125,6 +134,7 @@ The plugin provides 15+ reusable skills for AI coding agents:
 | `create-task` | Entry point — analyzes request, chooses execution mode, creates task |
 | `create-task-solo` | Single-agent task creation |
 | `create-task-team` | Multi-agent team task creation |
+| `create-task-from-template` | Create tasks from predefined templates |
 | `use-tasks` | Task usage and management skill |
 
 ### Task Execution
@@ -144,7 +154,44 @@ The plugin provides 15+ reusable skills for AI coding agents:
 | `create-project-docs` | Generate project documentation structure |
 | `update-codebase-summary` | Create or update codebase summary documentation |
 | `update-project-nav` | Update the project navigation map |
-| `update-doc-map` | Update the documentation map |
+
+### Exploration
+| Skill | Description |
+|-------|-------------|
+| `smart-explore` | Navigate and explore module directory trees efficiently |
+
+---
+
+## 📋 Tasks Reference
+
+The plugin includes pre-defined tasks — structured work units with goals, plans, and progress tracking for complex multi-step operations. Use the `load-task` tool to load a task into your workspace, then execute it with the appropriate skill.
+
+| Task | Description | Mode | Phases |
+|------|-------------|------|--------|
+| `update-project-doc` | Create or update AI agent navigation documentation for a project (AGENTS.md, decision-tree.md, codebase-summary.md, project-nav.md, etc.) | Solo | 8 phases: Explore → AGENTS.md → Per-Repo AGENTS.md → decision-tree → project-overview → codebase-summary → project-nav → Cross-Reference |
+
+### Using Tasks
+
+Prompt to execute a task:
+
+```
+execute the update-project-doc
+
+%execute-task-solo
+```
+
+The `%execute-task-solo` part loads this skill directly in the prompt, so that the agent has all the execution instructions.
+Use `%execute-task-team` for multi agents tasks. Note: the agent must have the `load-task` tool. When it uses it the task directory is copied to `.agents/tasks/[task-name]` and it's execution and state will be managed from there.
+
+The agent will execute phases sequentially, verify success criteria after each step, and update `state.md` to track progress.
+
+### Task Structure
+
+Each task contains:
+- `goals.md` — Goals and success criteria
+- `plan.md` — Step-by-step execution plan with verifiable success criteria
+- `state.md` — Progress tracking (updated after each phase)
+- `notes.md` — Optional context, rules, and related skills
 
 ---
 
@@ -158,8 +205,11 @@ agents/
     │   ├── agent-smith.yml         # Main coordinator agent
     │   ├── agent-smith-assistant.yml
     │   ├── agent-smith-search.yml
+    │   ├── agent-smith-code.yml
+    │   ├── agent-smith-doc.yml
     │   ├── agent-smith-sql.yml
-    │   └── ...
+    │   ├── agent-smith-help.yml
+    │   └── ... (16 total)
     ├── workflows/                  # 4 workflow definitions
     │   ├── agent-smith-config-info.yml
     │   ├── agent-smith-db.yml
@@ -168,8 +218,14 @@ agents/
     ├── skills/                     # 15+ skill modules
     │   ├── create-readme/SKILL.md
     │   ├── create-task/SKILL.md
-    │   ├── document-package/SKILL.md
-    │   └── ...
+    │   ├── smart-explore/SKILL.md
+    │   └── ... (16 total)
+    ├── tasks/                      # Pre-defined task definitions
+    │   └── update-project-doc/     # Project documentation task
+    │       ├── goals.md
+    │       ├── plan.md
+    │       ├── state.md
+    │       └── notes.md
     └── fragments/                  # Context helper files
         ├── workspace.md            # Workspace context info
         └── ctx-helper-files.md     # Context file references
@@ -180,7 +236,9 @@ agents/
 ## 🔧 Architecture
 
 ### Agent Coordination Pattern
-The `agent-smith` coordinator agent follows a specific workflow:
+
+The `agent-smith` coordinator agent follows a structured workflow:
+
 1. **Analyze** the user request
 2. **Decompose** into subtasks if necessary
 3. **Plan** the work sequence
@@ -188,19 +246,24 @@ The `agent-smith` coordinator agent follows a specific workflow:
 5. **Synthesize** results from agent responses
 
 ### Available Tools
+
 Agents have access to these tools:
-- `readfile` — Read file contents
-- `edit-search-replace` — Search and replace in files
-- `shell` — Execute shell commands
-- `python` — Execute Python code
-- `run-agent` — Call other agents for delegated work
-- `load-skill` — Load skill modules for specific tasks
-- `notify-user` — Send notifications to the user
-- `ddsearch` — Web search (via DuckDuckGo)
-- `read-webpage` — Read and extract webpage content
+
+| Tool | Description |
+|------|-------------|
+| `readfile` | Read file contents |
+| `edit-search-replace` | Search and replace in files |
+| `shell` | Execute shell commands |
+| `python` | Execute Python code |
+| `run-agent` | Call other agents for delegated work |
+| `load-skill` | Load skill modules for specific tasks |
+| `load-task` | Load task definitions for complex operations |
+| `notify-user` | Send notifications to the user |
 
 ### Context Fragments
-Agents can include project context using file references:
+
+Agents can include project context using file references in YAML:
+
 ```yaml
 template:
     system: |-
@@ -208,11 +271,31 @@ template:
       {file:../fragments/ctx-helper-files.md}
 ```
 
+### Sample Agent Definition
+
+Each agent is defined as a YAML file:
+
+```yaml
+name: infer
+description: Run a raw inference query
+type: "agent-smith"
+prompt: |-
+    {prompt}
+model: qwen4b
+inferParams:
+  top_p: 0.95
+  top_k: 20
+  min_p: 0
+  temperature: 0.6
+  repeat_penalty: 1
+```
+
 ---
 
 ## ⚙️ Configuration
 
 ### Model Parameters
+
 Agents support configurable inference parameters:
 
 ```yaml
@@ -229,6 +312,7 @@ chat_template_kwargs:
 ```
 
 ### Variables
+
 Agents can require runtime variables:
 
 ```yaml
@@ -236,6 +320,20 @@ variables:
     required:
         workspace:
             description: The local directory path where to operate
+```
+
+### Customizing Agent Behavior
+
+To customize an agent, copy the YAML from `dist/agents/` to your local features directory and modify it. The coordinator uses a system prompt that lists available agents and their purposes:
+
+```yaml
+template:
+    system: |-
+      You are Agent Smith, an AI coordinator agent. Your job is to organise
+      the workflow of other agents. Available agents:
+      - `agent-smith-assistant`: default assistant
+      - `agent-smith-search`: web search and reading
+      {file:../fragments/workspace.md}
 ```
 
 ---
@@ -249,16 +347,19 @@ variables:
 | [`@agent-smith/feat-git`](https://www.npmjs.com/package/@agent-smith/feat-git) | Git operations with AI-powered commit messages |
 | [`@agent-smith/feat-sqlite`](https://www.npmjs.com/package/@agent-smith/feat-sqlite) | SQLite database operations |
 | [`@agent-smith/feat-search`](https://www.npmjs.com/package/@agent-smith/feat-search) | Web search and crawling tools (used by search agent) |
+| [`@agent-smith/feat-shell`](https://www.npmjs.com/package/@agent-smith/feat-shell) | Sandboxed shell/Python execution in Docker containers |
+| [`@agent-smith/feat-fs`](https://www.npmjs.com/package/@agent-smith/feat-fs) | Filesystem operations with path authorization |
 
 ---
 
-## 📝 Important Notes
+## ⚠️ Important Notes
 
-- **No external dependencies** — Agents, workflows, and skills are loaded by the core framework
+- **No runtime code** — Agents, workflows, and skills are YAML/Markdown files loaded by the `@agent-smith/core` framework at runtime
 - **YAML-based configuration** — All agent definitions use YAML for easy customization
 - **Sequential delegation** — The coordinator calls one agent at a time for task completion
 - **Model flexibility** — Supports all compatible LLM models with configurable inference parameters
-- **Workspace context** — Agents operate within a specified workspace directory
+- **Workspace context** — Agents operate within a specified workspace directory (required variable)
+- **Requires core framework** — This plugin depends on `@agent-smith/core` for execution
 
 ---
 

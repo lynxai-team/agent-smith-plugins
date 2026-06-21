@@ -11,12 +11,13 @@ description: use this to create comprehensive README file for a given package or
 3. Locate target in the codebase summary (note its position, dependencies, and purpose)
 
 ### Phase 2: Deep Dive
-3. Navigate to directory: `/workspace/agent-smith/packages/{package-name}/` for a package, adapt the path
-4. Read `.agents/documentation/codebase-summary.md` for architecture, key files, and usage patterns
-5. Read documentation from `/workspace/agent-smith/docsite/public/doc/libraries/{package-name}/*.md` (get_started, usage, api)
+3. Use the `smart-explore` skill to walk the module's directory tree
+4. Navigate to directory: `/workspace/agent-smith/packages/{package-name}/` for a package, adapt the path
+5. Read `.agents/documentation/codebase-summary.md` for architecture, key files, and usage patterns
+6. Read documentation from `/workspace/agent-smith/docsite/public/doc/libraries/{package-name}/*.md` if it exists
 
 ### Phase 3: Synthesis & Writing
-6. Create `README.md` with this structure:
+7. Create `README.md` with this structure:
    - **Npm badge**: example:
       ```
       [![pub package](https://img.shields.io/npm/v/this-package-name)](https://www.npmjs.com/package/this-package-name)
