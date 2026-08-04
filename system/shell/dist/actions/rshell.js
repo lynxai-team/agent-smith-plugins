@@ -1,15 +1,15 @@
 /*
 # tool
-name: rshell
-description: "Execute read only shell commands"
+name: shell
+description: "Execute shell commands"
 arguments:
     command:
         description: |-
-            The shell command to execute (read only operations)
+            The shell command to execute
         required: true
-parallel: false
+parallelCalls: false
 */
-import { SimpleBox } from '@boxlite-ai/boxlite';
+import { JsBoxlite } from '@boxlite-ai/boxlite';
 async function action(args, options) {
     //console.log("SHELL ARGS", args);
     //console.log("SHELL OPTS", options);
@@ -21,41 +21,62 @@ async function action(args, options) {
         console.log('Opening box', location);
     }
     //console.log("Cmd:", cmd, cmdArgs);
-    const box = new SimpleBox({
+    const runtime = JsBoxlite.withDefaultConfig();
+    const box = await runtime.create({
         image: 'timbru31/node-alpine-git',
-        name: "shellbox",
+        workingDir: "/workspace",
         volumes: [
             { hostPath: location, guestPath: '/workspace', readOnly: true },
         ],
-        network: { "mode": "disabled" },
-        reuseExisting: true,
+        //network: { "mode": "disabled" },
+        //reuseExisting: true,
+        autoRemove: true,
     });
-    process.on('SIGINT', () => {
-        box.getInfo().then(info => {
-            //console.log("INFO", info);
-            if (info.state.running) {
-                console.log('\nExiting shell box');
-                box.stop().then(() => process.exit(0));
-            }
-            else {
-                process.exit(0);
-            }
-        });
-    });
+    process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
+    const stdOutBuf = new Array();
+    const stdErrBuf = new Array();
     let res = "";
+    setTimeout(() => {
+        stdErrBuf.push("Timeout: the process has timed out");
+        box.stop();
+    }, 60000);
     try {
-        const result = await box.exec("sh", "-c", args.command);
-        //console.log("CMD RES", result);
-        if (result?.stderr.length > 0) {
-            res = "[Error] exit code:" + result.exitCode + "\n" + result.stderr;
+        const execution = await box.exec("sh", ["-c", args.command]);
+        async function readStdout() {
+            const stdout = await execution.stdout();
+            while (true) {
+                const line = await stdout.next();
+                if (line === null)
+                    break;
+                const lt = line.trim();
+                console.log(`[stdout] ${lt}`);
+                stdOutBuf.push(lt);
+            }
         }
-        else {
-            if (result.stdout == "") {
-                res = "Exit code: " + result.exitCode;
+        async function readStderr() {
+            const stderr = await execution.stderr();
+            while (true) {
+                const line = await stderr.next();
+                if (line === null)
+                    break;
+                const lt = line.trim();
+                console.error(`[stderr] ${lt}`);
+                stdErrBuf.push(lt);
             }
-            else {
-                res = result.stdout;
-            }
+        }
+        await Promise.all([readStdout(), readStderr()]);
+        const result = await execution.wait();
+        //console.log("CMD RES", result);
+        res = `[Exit code]: ${result.exitCode}\n`;
+        if (result?.errorMessage) {
+            console.error("ERROR", result.errorMessage);
+            stdErrBuf.push(result.errorMessage);
+        }
+        if (stdOutBuf.length > 0) {
+            res += `[Stdout]: ${stdOutBuf.join("\n")}\n`;
+        }
+        if (stdErrBuf.length > 0) {
+            res += `[Stderr]: ${stdErrBuf.join("\n")}\n`;
         }
     }
     finally {

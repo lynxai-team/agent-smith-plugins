@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "strict": true,
     "sourceMap": false,
     "resolveJsonModule": true,
@@ -24,10 +23,9 @@
       "ES2022",
       "dom",
     ],
-    "baseUrl": ".",
     "paths": {
       "*": [
-        "node_modules/*"
+        "./node_modules/*"
       ]
     }
   },

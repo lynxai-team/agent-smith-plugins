@@ -1,6 +1,6 @@
 {
   "name": "@agent-smith/feat-shell",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Shell features for Agent Smith cli",
   "repository": "https://github.com/synw/agent-smith",
   "type": "module",
@@ -8,13 +8,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@agent-smith/core": "^0.0.3",
-    "@boxlite-ai/boxlite": "^0.9.5"
+    "@boxlite-ai/boxlite": "^0.9.7"
   },
   "devDependencies": {
-    "@types/node": "^25.9.3",
+    "@types/node": "^26.1.2",
     "tslib": "^2.8.1",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "files": [
     "dist"

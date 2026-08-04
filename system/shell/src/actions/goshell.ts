@@ -23,13 +23,13 @@ async function action(args: Record<string, any>, options: Record<string, any>) {
     //console.log("Cmd:", cmd, cmdArgs);
     const runtime = JsBoxlite.withDefaultConfig();
     const box = await runtime.create({
-        image: 'timbru31/node-alpine-git',
+        //image: 'golang:1.26',
+        image: "cimg/go:1.25-node",
         workingDir: "/workspace",
         volumes: [
-            { hostPath: location, guestPath: '/workspace', readOnly: true },
+            { hostPath: location, guestPath: '/workspace' },
         ],
         //network: { "mode": "disabled" },
-        //reuseExisting: true,
         autoRemove: true,
     });
     process.on('SIGINT', () => box.stop().then(() => process.exit(0)));

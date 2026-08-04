@@ -8,6 +8,7 @@ arguments:
     code:
         description: The code to execute
         required: true
+parallelCalls: false
 */
 import { CodeBox } from '@boxlite-ai/boxlite';
 async function action(args, options) {
@@ -21,17 +22,23 @@ async function action(args, options) {
     const box = new CodeBox({
         image: 'python:slim',
         name: "codebox",
+        cpus: 2,
+        diskSizeGb: 10,
+        memoryMib: 8192,
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
-        network: { "mode": "disabled" },
+        workingDir: "/workspace",
+        //network: { "mode": "disabled" },
         reuseExisting: true,
     });
     process.on('SIGINT', () => {
         box.getInfo().then(info => {
             //console.log("INFO", info);
             if (info.state.running) {
-                console.log('\nExiting shell box');
+                if (options?.debug || options?.verbose) {
+                    console.log('\nExiting shell box');
+                }
                 box.stop().then(() => process.exit(0));
             }
             else {
