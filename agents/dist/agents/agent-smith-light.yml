@@ -2,6 +2,11 @@ description: A basic agent
 category: "agent-smith"
 prompt: |-
     {prompt}
+template:
+    system: |-
+      You are Agent Smith assistant, an AI agent
+
+      {file:../fragments/workspace.md}
 model: qwen4b
 inferParams:
     min_p: 0
@@ -13,7 +18,13 @@ inferParams:
       enable_thinking: true
       preserve_thinking: true
 toolsList:
+  - shell
   - readfile
-  - writetofile?
-  - edit-search-replace?
+  - writetofile
+  - edit-search-replace
   - load-skill
+  - load-task
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate

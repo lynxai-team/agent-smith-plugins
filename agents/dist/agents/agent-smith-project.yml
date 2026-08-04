@@ -34,7 +34,8 @@ variables:
     workspace:
       description: The local directory path where to operate
 toolsList:
-  - readfile
+  - read-file
+  - write-file
   - edit-search-replace
   - shell
   - python

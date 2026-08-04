@@ -306,9 +306,9 @@ inferParams:
     temperature: 0.6
     repetition_penalty: 1
     presence_penalty: 1.5
-chat_template_kwargs:
-    enable_thinking: true
-    preserve_thinking: true
+    chat_template_kwargs:
+        enable_thinking: true
+        preserve_thinking: true
 ```
 
 ### Variables

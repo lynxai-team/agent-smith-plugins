@@ -35,7 +35,7 @@ variables:
       description: The local directory path where to operate
 toolsList:
   - shell
-  - readfile
+  - read-file
   - load-skill
   - agent-smith-config-info
   - agent-smith-help-assistant

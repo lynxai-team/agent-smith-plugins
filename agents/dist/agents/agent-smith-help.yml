@@ -38,6 +38,6 @@ variables:
 toolsList:
   - shell
   - python
-  - readfile
+  - read-file
   - agent-smith-db
   - read-feature

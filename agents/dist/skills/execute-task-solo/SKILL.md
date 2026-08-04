@@ -22,6 +22,8 @@ Tasks are located in `.agents/tasks/[task-name]/` directory.
 └── notes.md              # Optional: additional context/notes
 ```
 
+Read all these files
+
 ## Execution Workflow
 
 ### 1. Start/Resume Task
