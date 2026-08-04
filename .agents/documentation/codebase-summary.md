@@ -1,83 +1,85 @@
 # @agent-smith/plugins
 
 ## Summary
-Agent Smith plugins repository providing a collection of feature extensions for the Agent Smith CLI, organized into four categories: AI agents (agents), code management (git, sqlite), system utilities (fs, shell), and web capabilities (search, video).
+Agent Smith plugins repository providing feature extensions for the Agent Smith CLI, organized into four categories: AI agents (agents), code management (git, sqlite), system utilities (fs, shell), and web capabilities (search, video).
 
 ## Dependencies
-- `@agent-smith/core` — workflow execution engine, agent runtime, framework integration (used by all plugins)
-- `@agent-smith/cli` — CLI runtime and utilities (used by git, sqlite, fs, shell, agents)
-- External: `commander` — CLI command definition and argument handling (git plugin)
-- External: `better-sqlite3` — SQLite database driver (sqlite plugin)
-- External: `@inquirer/prompts`, `@inquirer/select` — interactive prompts (git, sqlite plugins)
-- External: `fs` / `fs/promises`, `path` — Node.js built-in filesystem modules (fs plugin)
-- External: `@boxlite-ai/boxlite` — Containerized execution environments for sandboxed command execution (shell plugin)
-- External: `ddgs`, `smolagents`, `crawl4ai`, `playwright` — Web search, crawling, and browser automation tools (search plugin)
-- External: `youtube_transcript_api` — YouTube video transcript extraction (video plugin)
+- `@agent-smith/core` — workflow engine, agent runtime (used by git, shell plugins)
+- `commander` — CLI command definition (git plugin)
+- `@inquirer/select`, `@inquirer/prompts` — interactive CLI prompts (git, sqlite plugins)
+- `better-sqlite3` — SQLite database driver (sqlite plugin)
+- `@boxlite-ai/boxlite` — Docker containerized execution via SimpleBox/CodeBox (shell plugin)
+- `cheerio`, `isomorphic-dompurify`, `turndown` — HTML parsing and sanitization (search plugin)
+- Runtime (Python): `ddgs`, `smolagents`, `crawl4ai`, `playwright` — web search, crawling, browser automation (search plugin)
+- Runtime (Python): `youtube_transcript_api` — YouTube transcript extraction (video plugin)
+- Node.js built-ins: `fs`, `fs/promises`, `path` — filesystem I/O (fs plugin)
 
 ## Used By
-- Agent Smith CLI (`@agent-smith/cli`) — consumes all plugins to provide feature extensions via terminal client commands
+- `@agent-smith/cli` — consumes all plugins to provide feature extensions via terminal commands
 
-## Entry Points
-- `agents/dist/agents/*.yml` — 16 agent configurations: coordinator, assistant, search, code, doc, sql, help variants (qwen35b/qwen4b models)
+## Entry Point
+- `agents/dist/agents/*.yml` — 16 agent definitions: coordinator, assistant, search, code, doc, sql, help variants (qwen35b/qwen4b models)
 - `agents/dist/workflows/*.yml` — 4 workflow definitions: config info, DB queries, Q&A, vision tasks
-- `agents/dist/skills/*/SKILL.md` — 15+ skill modules for task creation, execution, documentation, and project management
+- `agents/dist/skills/*/SKILL.md` — 15 skill modules for task creation, execution, documentation, and project management
 - `agents/dist/fragments/*.md` — Context helper fragments: workspace info and context file references
 - `code/git/dist/cmds/commit.js` — Git commit command with AI-powered message generation
-- `code/sqlite/dist/adaptaters/db-getschema.js` — SQLite schema extraction; `dist/actions/db-execute-read-query.js` and `db-ask-execute-query.js` for query execution
-- `system/fs/dist/main.js` — Core filesystem functions (lsdir, readFile, writeToFile) with path authorization
-- `system/shell/src/actions/shell.ts`, `rshell.ts`, `python.ts` — Sandboxed shell command execution in Docker containers
-- `web/search/dist/actions/ddsearch.py`, `open_webpage.py`, `openpage.py`, `smsearch.py`, `wikipedia.py` — Web search and content extraction tools
-- `web/video/dist/workflows/ytv.yml` — YouTube transcript extraction and chat workflow
+- `code/sqlite/dist/actions/db-execute-read-query.js`, `db-ask-execute-query.js` — Read-only and confirmed read/write SQL query execution
+- `system/fs/dist/main.js` — Re-exports lsdir, readFile, writeToFile with path authorization
+- `system/shell/dist/actions/{shell,rshell,python}.js` — Sandboxed command execution via SimpleBox/CodeBox Docker containers
+- `web/search/dist/actions/{ddsearch,smsearch,openpage,open_webpage,wikipedia}.py` — Web search and content extraction tools
+- `web/video/dist/actions/yt-transcript.py` — YouTube transcript extraction
 
 ## Key Files
 | File | Purpose |
 |------|---------|
 | **agents** | |
-| `dist/agents/*.yml` | 16 agent definitions: coordinator (agent-smith), assistant, search, code, doc, sql, help variants with tool access |
-| `dist/agents/agent-smith.yml` | Main coordinator agent: orchestrates team of agents, delegates tasks, uses run-agent tool |
-| `dist/workflows/*.yml` | Workflow definitions for config info, DB queries, Q&A, and vision tasks |
-| `dist/skills/*/SKILL.md` | Task management skills: create-task, execute-task, document-package, create-readme, update-codebase-summary, etc. |
-| `dist/fragments/workspace.md`, `ctx-helper-files.md` | Context helper fragments providing workspace info and file references for agents |
+| `dist/agents/agent-smith.yml` | Main coordinator agent: orchestrates team of agents, delegates tasks via tool calls |
+| `dist/agents/*.yml` (16 files) | Specialized agents: assistant, search, code, doc, sql, help variants, collaborator, infer, state, project |
+| `dist/workflows/*.yml` (4 files) | Workflows: config-info, db, q (Q&A), vision |
+| `dist/skills/*/SKILL.md` (15 files) | Skills: create-task, execute-task, document-package, update-codebase-summary, smart-explore, etc. |
+| `dist/fragments/workspace.md`, `ctx-helper-files.md` | Context helper fragments for agent workspace awareness |
 | **code/git** | |
 | `dist/cmds/commit.js` | Git commit command handler with AI-generated messages and user action selection |
-| `dist/actions/git_diff.js` | Executes git diff commands returning combined unstaged/staged changes |
-| `dist/workflows/*.yml` | Four workflows for commit message generation, diff analysis, and package-specific commits |
-| `dist/agents/*.yml` | Nine agents handling different commit scenarios (general, package-specific, plan-based) |
+| `dist/actions/git_diff.js` | Executes git diff returning combined unstaged/staged changes |
+| `dist/workflows/*.yml` (4 files) | Workflows: git_commit, git_commit_details, git_commit_pkg, checkdiff |
+| `dist/agents/*.yml` (6 files) | Agents: commit_msg, commit_analyze_msg, commit_details, commit_from_plan, commit_msg_pkg, analyze_diff |
 | **code/sqlite** | |
 | `dist/adaptaters/db-getschema.js` | Extracts database schema as SQL CREATE TABLE statements |
 | `dist/actions/db-execute-read-query.js`, `db-ask-execute-query.js` | Read-only and confirmed read/write SQL query execution |
-| `dist/workflows/sqlquery.yml`, `sqlreadquery.yml` | Full read/write and read-only workflow definitions |
-| `dist/agents/runsqliteagent.yml`, `runsqlitereadagent.yml` | Agent configs for qwen4b model database operations |
+| `dist/workflows/*.yml` (4 files) | Workflows: sqlite, sqliteread, sqlquery, sqlreadquery |
+| `dist/agents/*.yml` (3 files) | Agents: runsqliteagent, runsqlitereadagent, db-create-query |
 | **system/fs** | |
-| `dist/main.js` | Re-exports core filesystem functions (lsdir, readFile, writeToFile) |
-| `dist/utils.js` | Path parsing, directory listing, and path validation utilities |
-| `dist/actions/{readfile,writetofile,lsdir}.js` | File operations with path authorization security checks |
-| `dist/agents/fs-{read,light,light-routing}-agent.yml` | Read-only and read/write agent configurations for filesystem interaction |
+| `dist/main.js` | Re-exports lsdir, readFile, writeToFile from actions |
+| `dist/utils.js` | Path parsing, directory listing, workspace mapping, and path authorization |
+| `dist/actions/{readfile,writetofile,lsdir,edit-search-replace,dirfiles}.js` | File operations with path authorization security checks |
+| `dist/agents/fs-workspace-agent.yml` | Workspace-aware filesystem agent with read/write capabilities |
 | **system/shell** | |
-| `src/actions/{shell,rshell,python}.ts` | Sandboxed command execution via SimpleBox (rw) and CodeBox (Python) Docker containers |
-| `dist/agents/shellagent.yml`, `shellcmd.yml` | Shell operation agents with qwen4b model and security validation workflows |
-| `dist/tasks/{check-shellcmd,route-shellcmd,write-shellcmd,write-shellscript}.yml` | Security evaluation, complexity routing, and command/script generation tasks |
+| `dist/actions/shell.js` | General shell execution via SimpleBox Docker container (node-alpine-git image) |
+| `dist/actions/rshell.js`, `python.js` | Read-write shell and Python execution in sandboxed containers |
+| `dist/agents/shellagent.yml` | Shell agent config: qwen4b model with shell tool, workspace variable |
 | **web/search** | |
-| `dist/actions/ddsearch.py`, `smsearch.py` — DuckDuckGo and smolagents search implementations |
-| `dist/actions/openpage.py` — Advanced async crawler via crawl4ai with JS rendering support |
+| `dist/actions/ddsearch.py` — DuckDuckGo text search |
+| `dist/actions/smsearch.py` — smolagents WebSearchTool integration |
+| `dist/actions/openpage.py` — Async crawl4ai crawler with JS rendering |
 | `dist/actions/open_webpage.py`, `wikipedia.py` — Simple webpage extraction and Wikipedia lookup |
-| `dist/agents/{searchweb,browse,infers}.yml` — Multi-step search, Playwright browser automation, and inference augmentation agents |
+| `dist/actions/read-webpage.js`, `webpage.js` — Node.js webpage reading utilities |
+| `dist/agents/{searchweb,browse,infers}.yml` — Multi-step search, Playwright browser automation, inference augmentation |
 | **web/video** | |
 | `dist/workflows/ytv.yml` — Orchestrates transcript extraction with chat task execution |
-| `dist/actions/{yt-transcript,yt-transcript-chain}.py` — YouTube transcript extraction and chat-ready packaging |
+| `dist/actions/yt-transcript.py`, `yt-transcript-chain.py` — YouTube transcript extraction and chat-ready packaging |
 | `dist/tasks/yt-chat.yml` — AI chat interaction over video transcripts with configurable model params |
 
 ## Architecture
-- **Plugin-based extensibility**: Each plugin is an independent package that registers commands, actions, agents, or tasks with the Agent Smith CLI framework via YAML definitions.
-- **Agent coordination**: The `agents` plugin provides a coordinator agent that decomposes tasks and delegates to specialized agents (search, code, doc, sql, help) via tool calls; skills provide reusable knowledge modules for AI coding agents.
+- **Plugin-based extensibility**: Each plugin is an independent npm package registering commands, actions, agents, or tasks with the Agent Smith CLI framework via YAML definitions and JS/TS/Python action files.
+- **Agent coordination**: The `agents` plugin provides a coordinator agent (agent-smith.yml) that decomposes tasks and delegates to specialized agents (search, code, doc, sql, help) via tool calls; 15 reusable skills provide knowledge for AI coding agents.
 - **Workflow orchestration**: Plugins use YAML-defined workflows to chain actions (shell/DB/search operations) with AI agents (LLM-based generation), enabling multi-step pipelines.
-- **Security-first design**: System plugins enforce path authorization (fs plugin) and sandboxed execution via Docker containers (shell plugin); read-only modes and user confirmation prompts for write operations (sqlite plugin).
-- **Multi-backend support**: Search plugin provides redundant search backends (DuckDuckGo, smolagents, crawl4ai, Wikipedia) with agent-driven orchestration; shell plugin supports general shell and Python execution in isolated environments.
+- **Security-first design**: fs plugin enforces path authorization (workspace mapping + authorized path prefix checks); shell plugin uses Docker containers via SimpleBox for sandboxed execution; sqlite plugin requires user confirmation for write operations.
+- **Multi-backend search**: Search plugin provides redundant backends (DuckDuckGo, smolagents, crawl4ai, Wikipedia) with both Python and Node.js implementations, orchestrated by agent YAML definitions.
 
 ## Related
-- See `@agent-smith/core` — Core framework providing workflow engine, agent runtime, and tool integration used by all plugins
-- See `@agent-smith/cli` — Terminal client that consumes these plugins to provide feature commands
-- See `agents` ↔ `code/git`, `code/sqlite` — Agents delegate code-related tasks (git operations, database queries) to these plugins' actions and workflows
+- See `@agent-smith/core` — Core framework providing workflow engine, agent runtime, and tool integration
+- See `@agent-smith/cli` — Terminal client consuming these plugins for feature commands
+- See `agents` ↔ `code/git`, `code/sqlite` — Agents delegate code tasks (git ops, DB queries) to these plugins' actions and workflows
 - See `agent-smith-plugins/code/git` ↔ `agent-smith-plugins/code/sqlite` — Companion code management plugins with similar YAML workflow patterns
 - See `agent-smith-plugins/system/fs` ↔ `agent-smith-plugins/system/shell` — System utility plugins following shared security and agent configuration patterns
 - See `agent-smith-plugins/web/search` — Web capabilities plugin providing search, crawling, and browser automation tools; used by agents plugin's search agent
