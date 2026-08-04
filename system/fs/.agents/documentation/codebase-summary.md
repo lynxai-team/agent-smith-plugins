@@ -20,8 +20,8 @@ A filesystem plugin that provides secure file operations (read, write, list dire
 |------|---------|
 | `dist/main.js` | Main entry point that exports core filesystem functions |
 | `dist/utils.js` | Core utilities: path parsing, directory listing, path validation |
-| `dist/actions/readfile.js` | File read action with path authorization security checks |
-| `dist/actions/writetofile.js` | File write action with directory existence validation |
+| `dist/actions/read-file.js` | File read action with path authorization security checks |
+| `dist/actions/write-file.js` | File write action with directory existence validation |
 | `dist/actions/lsdir.js` | Directory listing action with authorized path enforcement |
 | `dist/agents/fs-read-agent.yml` | Read-only agent config using MCP filesystem server |
 | `dist/agents/fs-light-agent.yml` | Lightweight read/write agent with custom inference params |

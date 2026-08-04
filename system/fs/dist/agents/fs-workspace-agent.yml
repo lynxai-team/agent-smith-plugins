@@ -22,7 +22,7 @@ variables:
       description: The local directory path where to operate
 toolsList:
     - lsdir
-    - dirfiles?
-    - readfile?
+    - dirfiles
+    - read-file
     - edit-search-replace?
-    - writetofile?
+    - write-file?

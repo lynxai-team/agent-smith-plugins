@@ -7,8 +7,8 @@
 ## ✨ Features
 
 - 📂 **Directory Operations** — List files and folders with `lsdir` and read all files content with `dirfiles`
-- 📄 **File Reading** — Read file contents securely with `readfile`
-- ✍️ **File Writing** — Write content to files safely with `writetofile` and directory validation
+- 📄 **File Reading** — Read file contents securely with `read-file`
+- ✍️ **File Writing** — Write content to files safely with `write-file` and directory validation
 - 🔍 **File Editing** — Search and replace strings in files with `edit-search-replace`
 - 🤖 **AI Agents** — Pre-configured `fs-workspace-agent` for autonomous file operations
 - 🔒 **Path Authorization** — Built-in security layer that validates all file paths against allowed directories
@@ -53,13 +53,19 @@ description: A filesystem agent
 model: qwen4b
 toolsList:
   - fs-workspace-agent  # lightweight filesystem agent
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
 ```
 
 Run the agent:
 
 ```bash
-lm exampleagent "explain me what the code project in the current directory is doing" --mcp filesystem:.
+lm myagent "explain me what the code project in the current directory is doing" --workspace /some/path
 ```
+
+Or use `fs-workspace-agent` directly
 
 ### Programmatic Usage
 
@@ -182,9 +188,9 @@ variables:
 toolsList:
     - lsdir
     - dirfiles?
-    - readfile?
+    - read-file?
     - edit-search-replace?
-    - writetofile?
+    - write-file?
 ```
 
 **Available tools:**
@@ -192,8 +198,8 @@ toolsList:
 |------|-------------|
 | `lsdir` | List files and folders in a directory |
 | `dirfiles` | Read all files content in a directory (excludes hidden files) |
-| `readfile` | Read a file's content |
-| `writetofile` | Write content to a file |
+| `read-file` | Read a file's content |
+| `write-file` | Write content to a file |
 | `edit-search-replace` | Search and replace strings in a file |
 
 ## 📚 API Reference
@@ -264,7 +270,7 @@ import { lsdir, readFile, writeToFile } from "@agent-smith/feat-fs";
 
 - **Node.js Only** — This plugin requires Node.js and uses built-in `fs` and `path` modules. It is not compatible with browsers.
 - **Path Authorization** — All actions validate requested paths against authorized directories configured via `options.variables.path`. Operations on unauthorized paths will be rejected.
-- **Directory Creation** — The `writetofile` action requires the target directory to already exist. Create directories before writing files.
+- **Directory Creation** — The `write-file` action requires the target directory to already exist. Create directories before writing files.
 - **Agent Configuration** — When using agents, always specify authorized paths in the `variables.workspace` configuration to ensure secure file operations.
 
 ## 🔗 Related Packages

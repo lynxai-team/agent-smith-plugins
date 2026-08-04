@@ -24,7 +24,7 @@ async function action(args, options) {
     }
     const fp = msg;
     writeToFile(fp, args.content, options?.debug ?? false);
-    return `Ok: file ${fp} written`;
+    return `Ok: file written`;
 }
 
 export { action, writeToFile };
