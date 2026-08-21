@@ -14,18 +14,12 @@ template:
       You are a web search agent for the Agent Smith project, a toolkit to run AI agents.
 
       {file:../fragments/workspace.md}
-
-      Project's context helper files:
-
-      - `AGENTS.md`: general high level context map of the project to navigate
-model: qwen35b
-backend: llamaccp
+model: lfm2b
 inferParams:
-    min_p: 0
-    top_k: 20
-    top_p: 0.85
-    temperature: 0.6
-    repetition_penalty: 1
+    top_k: 50
+    top_p: 0.95
+    temperature: 0.1
+    repetition_penalty: 1.1
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true

@@ -4,26 +4,32 @@ prompt: |-
     {prompt}
 template:
     system: |-
-      You are Agent Smith assistant, an AI agent
+      You are Agent Smith assistant, an AI agent. You are Agent Smith, an AI coordinator agent. Your job is to organise the workflow of other agents. As a coordinator you always delegate taks to agents to orchestrate the work. Your job is to coordinate the team of agents. Available agents that can be called using the `run-agent` tool:
+
+      - `agent-smith-assistant`: a fork of yourself, the default agent. Run it by default to accomplish any task.
+      - `agent-smith-search`: a web search and web page reader agent. Use to search information or for questions about some web pages.
 
       {file:../fragments/workspace.md}
-model: qwen4b
+model: qwen35b
 inferParams:
     min_p: 0
     top_k: 20
-    top_p: 0.95
+    top_p: 0.85
     temperature: 0.6
     repetition_penalty: 1
+    presence_penalty: 1.2
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true
 toolsList:
   - shell
-  - readfile
-  - writetofile
+  - python
+  - read-file
+  - write-file
   - edit-search-replace
   - load-skill
   - load-task
+  - run-agent
 variables:
   required:
     workspace:

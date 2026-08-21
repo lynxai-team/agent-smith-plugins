@@ -1,5 +1,5 @@
-description: An agent to manage Agent Smith's documentation
-category: subagent
+description: A basic agent
+category: "agent-smith"
 prompt: |-
     {prompt}
 template:
@@ -7,28 +7,25 @@ template:
       You are Agent Smith assistant, an AI agent
 
       {file:../fragments/workspace.md}
-      {file:../fragments/ctx-helper-files.md}
-model: qwen35b
+model: qwen4b
 inferParams:
     min_p: 0
     top_k: 20
-    top_p: 0.85
+    top_p: 0.95
     temperature: 0.6
     repetition_penalty: 1
-    presence_penalty: 1.2
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true
+toolsList:
+  - shell
+  - read-file
+  - write-file
+  - python
+  - edit-search-replace
+  - load-skill
+  - load-task
 variables:
   required:
     workspace:
       description: The local directory path where to operate
-toolsList:
-  - read-file
-  - write-file
-  - edit-search-replace
-  - shell
-  - python
-  - run-agent
-  - load-skill
-  - load-task
