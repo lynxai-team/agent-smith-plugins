@@ -30,9 +30,9 @@ async function action(args: Record<string, any>, options: Record<string, any>) {
             { hostPath: location, guestPath: '/workspace' },
         ],
         //network: { "mode": "disabled" },
-        autoRemove: true,
+        //autoRemove: true,
     });
-    process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
+    //process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     const stdOutBuf = new Array<string>();
     const stdErrBuf = new Array<string>();
     let res = "";

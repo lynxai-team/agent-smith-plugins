@@ -30,7 +30,7 @@ async function action(args, options) {
         ],
         //network: { "mode": "disabled" },
         //reuseExisting: true,
-        autoRemove: true,
+        //autoRemove: true,
     });
     process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     const stdOutBuf = new Array();
@@ -78,6 +78,9 @@ async function action(args, options) {
         if (stdErrBuf.length > 0) {
             res += `[Stderr]: ${stdErrBuf.join("\n")}\n`;
         }
+    }
+    catch (e) {
+        console.error(e);
     }
     finally {
         if (options?.debug) {

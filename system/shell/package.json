@@ -1,6 +1,6 @@
 {
   "name": "@agent-smith/feat-shell",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Shell features for Agent Smith cli",
   "repository": "https://github.com/synw/agent-smith",
   "type": "module",
