@@ -40,12 +40,12 @@ async function action(args, options) {
     try {
         const stats = statSync(msg);
         if (stats.isDirectory()) {
-            return `[Error]: path is a directory, not a file: "${msg}"`;
+            return "[Error]: path is a directory, not a file";
         }
         fc = readFile(msg);
     } catch (err) {
         if (err.message.includes("Invalid UTF-8") || err.message.includes("invalid encoding")) {
-            return `[Error]: file is not a valid text file (binary or unsupported encoding): "${msg}"`;
+            return "[Error]: file is not a valid text file (binary or unsupported encoding)";
         }
         return `[Error]: ${err.message}`;
     }
@@ -53,7 +53,7 @@ async function action(args, options) {
     // Count occurrences of old_content in the file
     const matches = fc.match(new RegExp(_escapeRegExp(args.old_content), 'g'));
     if (!matches) {
-        return `[Error]: old_content not found in file "${msg}"`;
+        return "[Error]: old_content not found in file";
     }
 
     const nc = _replaceAll(fc, args.old_content, args.new_content);

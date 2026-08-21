@@ -3,28 +3,28 @@ import path from "path";
 
 function parsePath(args, options) {
     // check required args
-    const location = options?.variables?.path ?? options?.variables?.workspace;
+    const location = options?.variables?.workspace;
     if (!location) {
-        return { ok: false, msg: "[Error]: missing path or workspace parameter" };
+        return { ok: false, msg: "[Error]: missing the workspace parameter" };
     }
     if (!args?.path) {
-        throw new Error(`lsdir parsePath: provide  a dirPath argument`);
+        return { ok: false, msg: "[Error]: provide a file path argument" };
+    }
+    if (!args.path.startsWith("/workspace")) {
+        return { ok: false, msg: "[Error]: the file path must be absolute and start with /workspace" };
     }
     let requestedPath = args.path;
-    if (args.path.startsWith("./")) {
-        requestedPath = process.cwd() + args.path.slice(2);
-    }
     let ok = false;
     let fp;
     //console.log("PPA", args);
     //console.log("PPO", options);
     // check for workspace
     if (options?.variables?.workspace) {
-        fp = requestedPath.replace("/workspace", options.variables.workspace);
+        fp = requestedPath.replace("/workspace", location);
         ok = true;
     }
     // check for authorized paths if no workspace
-    else if (options?.variables?.path) {
+    /*else if (options?.variables?.path) {
         const aps = options.variables.path.split(",");
         for (const ap of aps) {
             const authorizedPath = [".", "./"].includes(ap) ? process.cwd() : ap;
@@ -35,7 +35,7 @@ function parsePath(args, options) {
                 break;
             }
         }
-    }
+    }*/
     if (!ok) {
         return { ok: false, msg: "[Error]: unauthorized file path" };
     }
@@ -102,7 +102,7 @@ function readFile(fp) {
         const content = fs.readFileSync(fp, { encoding: 'utf8' });
         return content;
     } catch (error) {
-        throw new Error(`Failed to read file: ${error.message}`);
+        throw new Error("Failed to read file");
     }
 }
 
