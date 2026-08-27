@@ -35,6 +35,11 @@ class VisitWebpageTool {
             const html = this.sanitize(rawhtml);
             let markdownContent = this.turndownService.turndown(html).trim();
             markdownContent = markdownContent.replace(/\n{3,}/g, '\n\n');
+            // Empty-but-200 pages (e.g. JS-rendered or blocked) previously returned "" which the history builder
+            // misread as a pending tool call -> duplicate assistant message. Give actionable feedback instead.
+            if (!markdownContent) {
+                return `The webpage at ${url} returned no readable content. The page may require JavaScript or blocked the request.`;
+            }
             return this.truncateContent(markdownContent, this.maxOutputLength);
         } catch (error) {
             if (error instanceof TypeError && error.message.includes('Timeout')) {
