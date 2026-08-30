@@ -28,8 +28,9 @@ async function action(args, options) {
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
+        memoryMib: 2048,
         //network: { "mode": "disabled" },
-        //reuseExisting: true,
+        reuseExisting: true,
         //autoRemove: true,
     });
     process.on('SIGINT', () => box.stop().then(() => process.exit(0)));

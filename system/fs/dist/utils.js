@@ -109,7 +109,7 @@ function readFile(fp) {
 function writeToFile(filePath, content, isVerbose) {
     const dirPath = path.dirname(filePath);
     if (!fs.existsSync(dirPath)) {
-        throw new Error(`The directory ${dirPath} does not exist`);
+        throw new Error(`The directory does not exist`);
     }
     try {
         // Write content to file
@@ -118,7 +118,7 @@ function writeToFile(filePath, content, isVerbose) {
             console.log(`File ${filePath} written`);
         }
     } catch (e) {
-        throw new Error(`writing file ${filePath}, ${e}`);
+        throw new Error(`writing file, ${e}`);
     }
 }
 

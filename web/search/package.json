@@ -21,6 +21,7 @@
   "dependencies": {
     "cheerio": "^1.2.0",
     "isomorphic-dompurify": "^3.16.0",
+    "lru-cache": "^11.5.2",
     "turndown": "^7.2.4"
   }
 }

@@ -17,5 +17,8 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@xberg-io/xberg": "^1.0.14"
+  }
 }

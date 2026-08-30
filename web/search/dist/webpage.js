@@ -20,12 +20,7 @@ class VisitWebpageTool {
         return $.html();
     }
 
-    truncateContent(content, maxLength) {
-        if (content.length <= maxLength) return content;
-        return content.slice(0, maxLength) + `\n..._This content has been truncated to stay below ${maxLength} characters_...\n`;
-    }
-
-    async forward(url) {
+    async forward(url, { offset = 0, length } = {}) {
         try {
             const response = await fetch(url, { signal: AbortSignal.timeout(this.timeout) });
             if (!response.ok) {
@@ -40,7 +35,27 @@ class VisitWebpageTool {
             if (!markdownContent) {
                 return `The webpage at ${url} returned no readable content. The page may require JavaScript or blocked the request.`;
             }
-            return this.truncateContent(markdownContent, this.maxOutputLength);
+            const total = markdownContent.length;
+            if (offset >= total) {
+                return `Offset ${offset} is beyond the end of the content (${total} characters total); nothing more to read.`;
+            }
+            const maxLen = length ?? this.maxOutputLength;
+            let end = Math.min(total, offset + maxLen);
+            // snap back to a newline so chunks don't split mid-line
+            if (end < total) {
+                const nl = markdownContent.lastIndexOf("\n", end);
+                if (nl > offset) end = nl + 1;
+            }
+            // avoid splitting a surrogate pair at the boundary
+            if (end < total && (markdownContent.charCodeAt(end) & 0xfc00) === 0xdc00) {
+                end -= 1;
+            }
+            const chunk = markdownContent.slice(offset, end);
+            const remaining = total - end;
+            if (remaining > 0) {
+                return chunk + `\n\n[read-webpage] returned characters ${offset}-${end} of ${total}. ${remaining} characters remain. To continue, call read-webpage again with the same url and offset=${end}.`;
+            }
+            return chunk;
         } catch (error) {
             if (error instanceof TypeError && error.message.includes('Timeout')) {
                 return 'The request timed out. Please try again later or check the URL.';

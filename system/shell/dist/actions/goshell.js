@@ -31,6 +31,7 @@ async function action(args, options) {
         ],
         //network: { "mode": "disabled" },
         //autoRemove: true,
+        reuseExisting: true,
     });
     //process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     const stdOutBuf = new Array();
