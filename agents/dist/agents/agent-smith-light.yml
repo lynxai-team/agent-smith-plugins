@@ -25,6 +25,7 @@ toolsList:
   - shell
   - python
   - read-file
+  - read-document
   - write-file
   - edit-search-replace
   - load-skill
