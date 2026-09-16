@@ -26,6 +26,7 @@ async function action(args, options) {
         //image: 'golang:1.26',
         image: "cimg/go:1.25-node",
         workingDir: "/workspace",
+        homeDir: "/workspace",
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],

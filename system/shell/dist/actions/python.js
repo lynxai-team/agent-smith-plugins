@@ -22,13 +22,13 @@ async function action(args, options) {
     const box = new CodeBox({
         image: 'python:slim',
         name: "codebox",
-        cpus: 2,
-        diskSizeGb: 10,
+        diskSizeGb: 2,
         memoryMib: 8192,
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
         workingDir: "/workspace",
+        homeDir: "/workspace",
         //network: { "mode": "disabled" },
         reuseExisting: true,
     });

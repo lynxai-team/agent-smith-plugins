@@ -25,6 +25,7 @@ async function action(args, options) {
     const box = await runtime.create({
         image: 'timbru31/node-alpine-git',
         workingDir: "/workspace",
+        homeDir: "/workspace",
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
