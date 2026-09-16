@@ -1,0 +1,34 @@
+tool:
+    description: An agent that can open web pages and extract information from them
+    arguments:
+        urls:
+          description: |-
+            An comma separated list of urls to open to use to answer the query in the prompt. Example: https://example.com, https://yahoo.com.
+          required: true
+        prompt: 
+          description: |-
+            Precise instructions with exactly what you want from the page(s), like what data to extract for example. Prefer targeted and narrow queries.
+          required: true
+prompt: |-
+  {prompt}
+
+  Read only the given urls. Answer only with the requested information, omit non essential details. If you can't retrieve content or find relevant data from the pages just report to the user. Never open pdf and other downloadable documents links.
+template:
+  system: |-
+    You are in charge of reading web pages and retrieve informations from them. 
+    
+    Instructions:
+    
+    - If you get 403 Forbidden status codes, a dynamicaly loaded javascript page or other errors that prevent you from reading content don't insist and report that the page is not accessible.
+    - Avoid reading very long pages and non html documents, like pdf.
+model: minicpm-2b
+inferParams:
+  top_k: 20
+  top_p: 0.95
+  min_p: 0
+  temperature: 0.8
+toolsList:
+  - read-webpage
+workflow:
+  before:
+    - adaptater: pre-query-webpages

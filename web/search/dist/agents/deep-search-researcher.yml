@@ -1,0 +1,33 @@
+tool:
+    description: An agent to search the web for informations
+    arguments:
+        prompt: 
+            description: The search query
+            required: true
+description: Search tool
+prompt: |-
+    {prompt}
+template:
+  system: |-
+    You are in charge of conducting a web search.
+model: ornith
+inferParams:
+  top_k: 20
+  top_p: 0.85
+  min_p: 0
+  temperature: 0.6
+  presence_penalty: 1.2
+  repetition_penalty: 1
+  chat_template_kwargs:
+    enable_thinking: true
+    preserve_thinking: true 
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+  - search
+  - query-webpages
+  - shell
+  - read-file
+  - write-file

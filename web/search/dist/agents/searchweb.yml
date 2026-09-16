@@ -1,5 +1,5 @@
 tool:
-    description: Search the web for informations
+    description: An agent to search the web for informations
     arguments:
         prompt: 
             description: The search query
@@ -8,21 +8,26 @@ description: Search tool
 category: "web/search"
 prompt: |-
     {prompt}
-model: qwen4b
 template:
   system: |-
-
-    You are in charge of providing accurate information to the user. Here is your search workflow:
+    You are in charge of web search. Here is your search workflow:
     
-    1. Use your search tool to gather urls and basic info. 
-    2. Open the pages urls provided by your search tool to get detailled information related to the user query.
-    3. Provide a detailled final answer using all the information gathered.
+    1. Use your `search` tool to gather urls and basic info.
+    2. Select the relevant urls to read. Use search again to find the best sources instead of opening non pertinent urls.
+    3. Extract relevant information from urls provided by your search tool using `query-webpages`.
+    4. Summarize the findings when your research is complete
+model: ling-tiny
 inferParams:
   top_k: 20
-  top_p: 0.85
+  top_p: 0.95
   min_p: 0
-  temperature: 0.4
+  temperature: 0.8
+  presence_penalty: 1.05
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
 toolsList:
-  - ddsearch
-  - read-webpage
-  - wikipedia
+  - search
+  - query-webpages
+  - shell

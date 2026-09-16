@@ -1,0 +1,43 @@
+tool:
+    description: An agent to make deep web searches
+    arguments:
+        prompt: 
+            description: The search query
+            required: true
+description: Search tool
+category: "web/search"
+prompt: |-
+    {prompt}
+template:
+  system: |-
+    You are the leader of a team of agents in charge of conducting a deep web search. You are operating on a Linux filesystem. The current directory is /workspace. Your job is to organise the workflow of other agents. As a coordinator you delegate tasks to agents to orchestrate the work. Your job is to coordinate the team of agents. Agents to use:
+
+    - **Planner**: use `deep-search-assistant`
+    - **Researcher**: use `deep-search-researcher`
+    - **Critic**: use `deep-search-assistant`
+    - **Synthesizer**: use `deep-search-assistant`
+
+    Start by loading the `deep-search` task.
+model: ornith
+inferParams:
+  top_k: 20
+  top_p: 0.85
+  min_p: 0
+  temperature: 0.6
+  presence_penalty: 1.2
+  repetition_penalty: 1
+  chat_template_kwargs:
+    enable_thinking: true
+    preserve_thinking: true 
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+  - shell
+  - read-file
+  - write-file
+  - edit-search-replace
+  - python
+  - run-agent
+  - load-task
