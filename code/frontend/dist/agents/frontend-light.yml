@@ -1,0 +1,31 @@
+description: Frontend coder light agent
+category: code/frontend
+prompt: |-
+    {prompt}
+template:
+    system: |-
+        You are Lynx Coder, a coding agent from Lynx AI.
+
+        {file:../fragments/workspace.md}
+        
+        {file:../fragments/ctx-helper-files.md}
+model: qwen35b
+inferParams:
+    min_p: 0
+    top_k: 20
+    top_p: 0.85
+    temperature: 0.6
+    repetition_penalty: 1
+    chat_template_kwargs:
+        enable_thinking: true
+        preserve_thinking: true
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+  - shell
+  - python
+  - load-image
+  - edit-search-replace
+  - browser-agent

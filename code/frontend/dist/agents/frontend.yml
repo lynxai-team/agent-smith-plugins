@@ -1,0 +1,37 @@
+description: Frontend coder agent
+category: code/frontend
+prompt: |-
+    {prompt}
+template:
+    system: |-
+        You are Lynx Coder, a coding agent from Lynx AI.
+
+        {file:../fragments/workspace.md}
+        
+        {file:../fragments/ctx-helper-files.md}
+
+        Load the typescript-coding-guide skill when you need to code. For Playwright always use the headed mode ("--headed" parameter). Close the browser when you are done.
+model: qwen35b
+inferParams:
+    min_p: 0
+    top_k: 20
+    top_p: 0.85
+    temperature: 0.6
+    repetition_penalty: 1
+    chat_template_kwargs:
+        enable_thinking: true
+        preserve_thinking: true
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+  - read-file
+  - write-file
+  - edit-search-replace
+  - shell
+  - python
+  - load-skill
+  - read-webpage
+  - load-image
+  - playwright-cli

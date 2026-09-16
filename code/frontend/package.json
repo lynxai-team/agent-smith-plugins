@@ -1,0 +1,19 @@
+{
+  "name": "@agent-smith/feat-frontend",
+  "version": "0.0.1",
+  "description": "Frontend coder features for Agent Smith",
+  "repository": "https://github.com/synw/agent-smith",
+  "dependencies": {
+    "@agent-smith/core": "^0.0.21",
+    "string-argv": "^0.3.2"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT"
+}
