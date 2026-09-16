@@ -1,8 +1,11 @@
 {
   "name": "@agent-smith/feat-fs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Filesystem features for Agent Smith",
   "repository": "https://github.com/synw/agent-smith-plugins",
+  "dependencies": {
+    "@xberg-io/xberg": "^1.0.14"
+  },
   "module": "./dist/main.js",
   "type": "module",
   "exports": {
@@ -17,8 +20,5 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "license": "MIT",
-  "dependencies": {
-    "@xberg-io/xberg": "^1.0.14"
-  }
+  "license": "MIT"
 }
