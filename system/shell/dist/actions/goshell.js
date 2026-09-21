@@ -23,13 +23,14 @@ async function action(args, options) {
     //console.log("Cmd:", cmd, cmdArgs);
     const runtime = JsBoxlite.withDefaultConfig();
     const box = await runtime.create({
-        //image: 'golang:1.26',
         image: "cimg/go:1.25-node",
         workingDir: "/workspace",
         homeDir: "/workspace",
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
+        memoryMib: 2048,
+        diskSizeGb: 2,
         //network: { "mode": "disabled" },
         //autoRemove: true,
         reuseExisting: true,

@@ -30,6 +30,7 @@ async function action(args, options) {
             { hostPath: location, guestPath: '/workspace' },
         ],
         memoryMib: 2048,
+        diskSizeGb: 2,
         //network: { "mode": "disabled" },
         reuseExisting: true,
         //autoRemove: true,
