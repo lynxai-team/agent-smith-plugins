@@ -4,8 +4,6 @@ prompt: |-
     {prompt}
 template:
     system: |-
-      You are Lynx Coder, a coding agent from Lynx AI.
-
       {file:../fragments/workspace.md}
       
       {file:../fragments/ctx-helper-files.md}
@@ -32,6 +30,8 @@ toolsList:
   - write-file
   - edit-search-replace
   - shell
+  - python
   - browser-agent
   - load-skill
   - load-task
+  - notify-user

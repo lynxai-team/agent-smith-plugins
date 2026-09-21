@@ -1,5 +1,5 @@
 tool:
-  name: lx-browser
+  name: browser-agent
   description: An agent that has access to browser usage using Playwright
   arguments:
       prompt:
@@ -11,15 +11,13 @@ prompt: |-
     {prompt}
 template:
     system: |-
-        You are Lynx Coder, a coding agent from Lynx AI.
-        
         Your task is to use a browser with playwright-cli. Constraints:
          
         - You always work in headed mode: use the `--headed` flag with commands like `open`
+        - Never save screenshots unless asked
         - Close the browser when you are done
-        - For screenshots use the `--filename` flag with absolute paths starting with /workspace. You don"t need to verify if he screenshots has been saved. Limit the size of the screenshots (max 1024px width).
 
-        Important: start by loading the `playwright-cli` skill to understand the api before running commands.
+        Important: start by loading the `playwright-cli-mini` skill to understand the api before running commands.
 model: qwen35b
 variables:
   required:
@@ -28,8 +26,3 @@ variables:
 toolsList:
   - playwright-cli-headed
   - load-skill
-workflow:
-    before:
-        - adaptater: from-container
-    after:
-        - adaptater: to-container

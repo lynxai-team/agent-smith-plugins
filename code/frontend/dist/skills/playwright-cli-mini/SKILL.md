@@ -1,5 +1,5 @@
 ---
-name: playwright-cli
+name: playwright-cli-mini
 description: Automate browser interactions, test web pages and work with Playwright tests.
 ---
 
@@ -8,8 +8,6 @@ description: Automate browser interactions, test web pages and work with Playwri
 ## Quick start
 
 ```bash
-# open new browser
-playwright-cli open
 # open new browser in headed mode
 playwright-cli open --headed
 # navigate to a page
@@ -36,16 +34,6 @@ playwright-cli click e3
 playwright-cli dblclick e7
 # --submit presses Enter after filling the element
 playwright-cli fill e5 "user@example.com"  --submit
-playwright-cli drag e2 e8
-# drop files or data onto an element (from outside the page)
-playwright-cli drop e4 --path=/workspace/image.png
-playwright-cli drop e4 --data="text/plain=hello world"
-playwright-cli hover e4
-playwright-cli select e9 "option-value"
-playwright-cli upload ./document.pdf
-playwright-cli check e12
-playwright-cli uncheck e12
-playwright-cli snapshot
 # search the snapshot for text or a regexp, returns matching nodes with surrounding context
 playwright-cli find "Sign in"
 playwright-cli find --regex "Sign (in|up)"
@@ -89,14 +77,6 @@ playwright-cli mousedown right
 playwright-cli mouseup
 playwright-cli mouseup right
 playwright-cli mousewheel 0 100
-```
-
-### Save as
-
-```bash
-playwright-cli screenshot --filename=/workspace/page.png
-playwright-cli screenshot e5 --filename=/workspace/page.png
-playwright-cli pdf --filename=/workspace/page.pdf
 ```
 
 ### DevTools
@@ -169,45 +149,16 @@ playwright-cli click "getByRole('button', { name: 'Submit' })"
 playwright-cli click "getByTestId('submit-button')"
 ```
 
-## Example: Form submission
+## Interactive session
 
-```bash
-playwright-cli open https://example.com/form
-playwright-cli snapshot
-playwright-cli fill e1 "user@example.com"
-playwright-cli fill e2 "password123"
-playwright-cli click e3
-playwright-cli snapshot
-playwright-cli close
-```
-
-## Example: Multi-tab workflow
+Use this to interact with the user.
 
 ```bash
 playwright-cli open https://example.com
-playwright-cli tab-new https://example.com/other
-playwright-cli tab-list
-playwright-cli tab-select 0
-playwright-cli snapshot
-playwright-cli close
-```
+# show something to the user
+playwright-cli show
+# perform actions that the user will see ...
 
-## Example: Debugging with DevTools
-
-```bash
-playwright-cli open https://example.com
-playwright-cli click e4
-playwright-cli fill e7 "test"
-playwright-cli console
-playwright-cli requests
-playwright-cli close
-```
-
-## Example: Interactive session
-
-Ask the user for UI review or design feedback. The user draws boxes on the live page and types comments; you receive the annotated screenshot, the snapshot of the marked region, and the user's notes. Use this whenever the user asks for "UI review", "design feedback", or to "ask the user what they think / want / mean":
-
-```bash
-playwright-cli open https://example.com
+# or ask the user to point at something
 playwright-cli show --annotate
 ```

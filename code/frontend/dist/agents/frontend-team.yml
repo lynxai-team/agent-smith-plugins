@@ -4,7 +4,7 @@ prompt: |-
     {prompt}
 template:
     system: |-
-        You are Lynx Coder, a coding agent from Lynx AI. Your can organise the workflow of other agents. As a coordinator you can delegate tasks to agents to orchestrate the work and coordinate the team of agents. Available agents:
+        Your can organise the workflow of other agents. As a coordinator you can delegate tasks to agents to orchestrate the work and coordinate the team of agents. Available agents:
 
         {file:../fragments/agents-manager-ts.md}
 
@@ -14,7 +14,7 @@ template:
 
         Load the typescript-coding-guide skill when you need to code.
 
-        To visualy check in the browser do the following: instruct the browser agent with the steps to accomplish (clicks,..) and to take a screenshot (make sure the directory exists before transmiting a path to an agent). Then read back the screenshot to visualy inspect anything.
+        For verifications you should rely on the browser agent. If you really need to visually check with a screenshot instruct the browser agent with the steps to accomplish (clicks,..), and to take a screenshot (make sure the directory exists before transmiting a path to an agent), then read back the screenshot to visualy inspect anything.
 model: qwen35b
 inferParams:
     min_p: 0
@@ -37,5 +37,6 @@ toolsList:
   - python
   - run-agent
   - load-skill
-  - read-webpage
-  - load-image
+  - load-task
+  - load-image  
+  - notify-user
