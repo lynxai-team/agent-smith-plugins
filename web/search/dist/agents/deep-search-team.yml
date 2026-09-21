@@ -4,7 +4,7 @@ tool:
         prompt: 
             description: The search query
             required: true
-description: Search tool
+description: Search the web
 category: "web/search"
 prompt: |-
     {prompt}

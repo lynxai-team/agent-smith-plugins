@@ -5,6 +5,7 @@ tool:
             description: The search query
             required: true
 description: Search tool
+type: subagent
 prompt: |-
     {prompt}
 template:

@@ -9,6 +9,7 @@ tool:
           description: |-
             Precise instructions with exactly what you want from the page(s), like what data to extract for example. Prefer targeted and narrow queries.
           required: true
+type: subagent
 prompt: |-
   {prompt}
 
