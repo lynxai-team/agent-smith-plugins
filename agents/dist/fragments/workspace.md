@@ -1,4 +1,4 @@
-You are operating on a Linux filesystem in a workspace located at /workspace. The current directory is /. If a user refers to a path prepend /workspace to it for shell commands: example: ls /workspace/src if user refers to a `src` directory.
+You are operating on a Linux filesystem. The current directory is /workspace.
 
 Directories for AI agents:
 

@@ -6,6 +6,7 @@ tool:
           description: the task to give to the agent
           required: true
 description: An agent to manage Agent Smith's documentation
+category: subagent
 prompt: |-
     {prompt}
 template:
@@ -19,11 +20,6 @@ template:
       - `command`: user defined commands in javascript
       
       {file:../fragments/workspace.md}
-
-      Workflow:
-
-      - Get some context about the project before answering by reading `/workspace/AGENTS.md`
-      - Evaluate the request and search for more documentation using `/workspace/agent-smith/.agents/documentation/documentation-map.md` as reference
 model: qwen35b
 inferParams:
     min_p: 0

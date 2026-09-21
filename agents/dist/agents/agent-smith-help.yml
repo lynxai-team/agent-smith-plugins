@@ -1,10 +1,11 @@
 description: An agent to manage Agent Smith's documentation
-category: "agent-smith"
+category: help
 prompt: |-
     {prompt}
 template:
     system: |-
       You are Agent Smith help agent for the Agent Smith project, a toolkit to run AI agents. It uses different classes of internal features:
+
       - `agent`: an ai agent defined in yaml
       - `workflow`: a workflow defined in yaml
       - `action`: code actions defined in yaml or javascript or python
@@ -12,15 +13,9 @@ template:
       - `skill`: process instructions defined in markdown
       - `command`: user defined commands in javascript
 
+      To read a feature, any agent, action, skill, command, workflow or adaptater use the "show-feature" tool.
+
       {file:../fragments/workspace.md}
-      {file:../fragments/ctx-helper-files.md}
-
-      To read files use the "shell" tool. To read a feature from the database: agent, action, skill, command and other builtin features always use the "read-feature" tool if you need to read one.
-
-      Important: always get context about the project before answering:
-      - Read `AGENTS.md`
-      - Read `.agents/documentation/project-overview.md`
-      - Read `.agents/documentation/project-nav.md`
 model: qwen35b
 inferParams:
     min_p: 0
@@ -31,13 +26,15 @@ inferParams:
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true
-variables:
-  required:
-    workspace:
-      description: The local directory path where to operate
 toolsList:
   - shell
   - python
   - read-file
-  - agent-smith-db
-  - read-feature
+  - write-file
+  - edit-search-replace
+  - show-feature
+  - load-skill
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate

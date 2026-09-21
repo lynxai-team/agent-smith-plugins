@@ -1,0 +1,13 @@
+tool:
+  name: query-image
+  description: an assistant agent to read an image and anwer questions about it
+  arguments:
+      prompt:
+          description: the query about the image
+          required: true
+      path:
+          description: the absolute path to the image
+          required: true
+steps:
+  - adaptater: img2base64
+  - agent: read-image-agent

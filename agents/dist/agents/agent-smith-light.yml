@@ -1,5 +1,5 @@
 description: A basic agent
-category: "agent-smith"
+category: general
 prompt: |-
     {prompt}
 template:
@@ -24,10 +24,6 @@ inferParams:
 toolsList:
   - shell
   - python
-  - read-file
-  - read-document
-  - write-file
-  - edit-search-replace
   - load-skill
   - load-task
   - run-agent

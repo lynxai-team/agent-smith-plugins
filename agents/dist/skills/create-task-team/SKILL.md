@@ -111,9 +111,6 @@ The coordinator must instruct subagents that they can use the `.agents/tasks/[ta
 
 ## Progress
 ### Phase X: [name]
-- [ ] Step X.1: [description]
-- [x] Step X.2: [description] ✓
-
-## Notes
-- Next phase to execute: Phase X
+- [x] Step X.1: [description] ✓
+- [ ] Step X.2: [description]
 ```

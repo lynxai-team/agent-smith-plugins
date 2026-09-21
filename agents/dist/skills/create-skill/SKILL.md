@@ -7,18 +7,6 @@ description: use when asked to create a skill from a task just completed in this
 
 Turn the task you just executed into a reusable skill. The source of truth is your **current context window**: the original user request, every step you performed, corrections made along the way, and the final result. Do not re-ask for information already in context; do not invent steps that were not actually performed. If the task execution is NOT in your context (e.g. done in a previous session), ask the user for the missing steps instead of guessing.
 
-## When to create (and when not)
-
-**Worth creating:**
-- multi-step procedure with a repeatable sequence of operations
-- non-obvious project conventions, paths, flags, or edge cases you had to discover during the task
-- a task where corrections were made — those corrections are encoded expertise
-
-**Not worth it:**
-- trivial one-step operations ("read file X", "run command Y") — the agent handles these without help
-- work specific to this instance with nothing generalizable
-- an existing skill already covers it → propose updating that skill instead of creating a new one
-
 ## Workflow
 
 1. **Reconstruct the task** — from context: goal, inputs, constraints, final output format.

@@ -87,10 +87,6 @@ Contains all phases inline with step-by-step instructions. The agent retains con
 - [ ] Phase 2: [name]
   - [ ] Step 2.1
 
-## Notes
-- Next: Phase X, Step Y
-```
-
 ### 4. `notes.md` — Optional Context
 
 Use this file for any additional context, references, or information the agent should keep in mind while executing the task.
@@ -118,8 +114,7 @@ For each step:
 After completing each phase:
 1. Mark all steps in that phase as `[x]` with `✓`
 2. Mark the phase as `[x]`
-3. Update "Next" note to point to the next phase/step
-4. If all phases complete, set status to `completed`
+3. If all phases complete, set status to `completed`
 
 ### 4. Completion
 1. When all phases are done, notify user
@@ -140,7 +135,3 @@ When creating a new task:
 6. **Wait for Confirmation:** Only execute if user approves the plan
 
 ---
-
-## Choosing Execution Mode
-
-Use the `task-mode` skill to decide between single-agent (`create-task-solo`) and multi-agent (`create-task-team`) execution before creating a task. The `task-mode` skill provides a checklist and decision framework based on context isolation needs vs unified context requirements.

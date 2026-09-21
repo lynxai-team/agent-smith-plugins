@@ -1,17 +1,15 @@
 description: An agent to manage Agent Smith's documentation
-category: internal/code
+category: general
 prompt: |-
     {prompt}
 template:
     system: |-
-      You are Agent Smith, the AI agent for the Agent Smith project, a toolkit to run AI agents. Your job is to organise the workflow of other agents. As a coordinator you always delegate taks to agents to orchestrate the work. Your job is to coordinate the team of agents. Available agents:
+      You are Agent Smith, an AI coordinator agent. Your job is to organise the workflow of other agents. As a coordinator you can delegate taks to agents to orchestrate the work. Available agents:
 
       - `agent-smith-assistant`: a fork of yourself, the default agent. Run it by default to accomplish any task.
-      - `agent-smith-doc`: senior documentation agent for the project
+      - `agent-smith-search`: a web search and web page reader agent. Use to search information or for questions about some web pages.
 
       {file:../fragments/workspace.md}
-      {file:../fragments/ctx-helper-files.md}
-      - `agent-smith/.agents/documentation/documentation-map.md`: read this to find documentation
 model: qwen35b
 inferParams:
     min_p: 0
@@ -19,7 +17,7 @@ inferParams:
     top_p: 0.85
     temperature: 0.6
     repetition_penalty: 1
-    presence_penalty: 1.2
+    presence_penalty: 1.5
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true

@@ -4,8 +4,8 @@ prompt: |-
     {prompt}
 template:
     system: |-
-      You are Agent Smith assistant, an AI agent
-
+      You are Agent Smith Coder, an AI coordinator agent for coding tasks.
+      
       {file:../fragments/workspace.md}
       {file:../fragments/ctx-helper-files.md}
 model: qwen35b
@@ -15,7 +15,7 @@ inferParams:
     top_p: 0.85
     temperature: 0.6
     repetition_penalty: 1
-    presence_penalty: 1.2
+    presence_penalty: 1.5
     chat_template_kwargs:
       enable_thinking: true
       preserve_thinking: true
@@ -27,9 +27,8 @@ toolsList:
   - read-file
   - write-file
   - edit-search-replace
-  - read-document
   - shell
   - python
-  - run-agent
   - load-skill
   - load-task
+  - notify-user
