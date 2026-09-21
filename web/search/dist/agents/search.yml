@@ -1,0 +1,33 @@
+tool:
+    description: An agent to search the web for informations
+    arguments:
+        prompt: 
+            description: The search query
+            required: true
+description: Search tool
+category: "web/search"
+prompt: |-
+    {prompt}
+template:
+  system: |-
+    You are in charge of web search. Here is your search workflow:
+    
+    1. Use your `web-search` tool to gather urls and basic info.
+    2. Select the relevant urls to read. Use search again to find the best sources instead of opening non pertinent urls.
+    3. Extract relevant information from urls provided by your search tool using `query-webpages`.
+    4. Summarize the findings when your research is complete
+model: ling-tiny
+inferParams:
+  top_k: 20
+  top_p: 0.95
+  min_p: 0
+  temperature: 0.8
+  presence_penalty: 1.05
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
+toolsList:
+  - web-search
+  - query-webpages
+  - shell
