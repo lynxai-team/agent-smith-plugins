@@ -21,7 +21,7 @@ async function action(args, options) {
     }
     const box = new CodeBox({
         image: 'python:slim',
-        name: "codebox",
+        name: "pythondata",
         diskSizeGb: 2,
         memoryMib: 8192,
         volumes: [
@@ -32,20 +32,21 @@ async function action(args, options) {
         //network: { "mode": "disabled" },
         reuseExisting: true,
     });
-    /* process.on('SIGINT', () => {
-         box.getInfo().then(info => {
-             //console.log("INFO", info);
-             if (info.state.running) {
-                 if (options?.debug || options?.verbose) {
-                     console.log('\nExiting shell box');
-                 }
-                 box.stop().then(() => process.exit(0));
-             }
-             else {
-                 process.exit(0);
-             }
-         });
-     });*/
+    process.on('SIGINT', () => {
+        box.getInfo().then(info => {
+            //console.log("INFO", info);
+            if (info.state.running) {
+                if (options?.debug || options?.verbose) {
+                    console.log('\nExiting shell box');
+                }
+                box.stop().then(() => process.exit(0));
+            }
+            else {
+                process.exit(0);
+            }
+        });
+    });
+    //await box.installPackages("numpy", "pandas");
     if (args?.packages) {
         await box.installPackages(...args.packages.split(","));
     }

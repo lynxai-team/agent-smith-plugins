@@ -33,7 +33,20 @@ async function action(args, options) {
         //reuseExisting: true,
         //autoRemove: true,
     });
-    //process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
+    process.on('SIGINT', () => {
+        box.getInfo().then(info => {
+            //console.log("INFO", info);
+            if (info.state.running) {
+                if (options?.debug || options?.verbose) {
+                    console.log('\nExiting shell box');
+                }
+                box.stop().then(() => process.exit(0));
+            }
+            else {
+                process.exit(0);
+            }
+        });
+    });
     const stdOutBuf = new Array();
     const stdErrBuf = new Array();
     let res = "";
