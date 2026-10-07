@@ -2,8 +2,18 @@
 name: update-project-nav
 description: use when asked to update the project navigation map documentation
 ---
+# Update Project Nav
 
-This skill describes the workflow to update the project navigation map file (`.agents/documentation/project-nav.md`). This is the canonical reference for AI agents to understand and navigate the entire project.
+Workflow to update the project navigation map file (`.agents/documentation/project-nav.md`). This is the canonical deep reference for AI agents to understand, navigate, and modify the entire project.
+
+## Ownership in this file (single source of truth — never repeated elsewhere)
+
+- **Key Conventions & Patterns** — the only conventions list in the project
+- **Code Snippets** — the only snippets in the project
+- **Documentation Links** — the only external links (npm / GitHub / live site) in the project
+- **Deep maps** — dependency graph, per-module key files/types, server routes, UI listing
+
+**Not in this file**: mission (`AGENTS.md`), repo table (`AGENTS.md`), ~1-page overview prose (`project-overview.md`), task→path quick reference (`decision-tree.md`).
 
 ## Workflow
 
@@ -21,9 +31,8 @@ This skill describes the workflow to update the project navigation map file (`.a
 ### Section Update Rules
 
 #### 1. Project Overview
-- Update the repos/modules table if components are added/removed/renamed
-- Update the purpose descriptions if functionality changes
-- Keep the table format: `| Repo | Path | Purpose |`
+- Keep concise: one-line description plus a module table if present
+- Do not restate the repo table from `AGENTS.md` or the overview prose from `project-overview.md`
 
 #### 2. Architecture Principles
 - Add new principles when architectural patterns emerge
@@ -66,33 +75,32 @@ This skill describes the workflow to update the project navigation map file (`.a
 - Update existing snippets if API signatures change
 - Keep language-appropriate examples
 
-#### 10. Navigation Quick Reference
-- Add new task→path mappings
-- Update paths if files moved
-- Keep the `| Task | Go To |` table format
-
-#### 11. Documentation Links
+#### 10. Documentation Links
 - Add new documentation resources
 - Remove links to deleted docs
 - Verify all paths still exist
 
-#### 12. Key Conventions & Patterns
+#### 11. Key Conventions & Patterns
 - Add new conventions discovered in the codebase
 - Update existing conventions if they change
-- Keep the `| Convention | Detail |` table format
+- Bullets or `| Convention | Detail |` table
+
+> **No "Navigation Quick Reference" section in this file** — the task→path map lives only in `decision-tree.md`. When files move or new common tasks appear, update `decision-tree.md` § Common Tasks instead.
 
 4. **Cross-reference check** — Ensure no content duplication:
-   - Project description, architecture patterns, quick references, and code snippets live ONLY in `project-nav.md`
+   - Conventions, snippets, dependency graph, module maps, and external links live ONLY in `project-nav.md`
    - Per-module technical details (entry points, key files, dependencies) live in `codebase-summary.md`
-   - No redundancy between files
+   - Task→path quick reference lives ONLY in `decision-tree.md`
+   - Mission and repo table live in `AGENTS.md`; overview prose lives in `project-overview.md`
 
-5. **Write the updated file** — Preserve the header note: `> **Purpose**: Single-reference map for AI coding agents to understand, navigate, and modify the <Project Name> codebase.`
+5. **Write the updated file** — Preserve the header note: `> Purpose: Single-reference map for AI coding agents to understand, navigate, and modify the <Project Name> codebase.`
 
 ## Rules
 
 - **Information-dense**: Use tables, bullets, one-line descriptions
-- **No redundancy**: Each piece of information lives in exactly one file
+- **No redundancy**: Each piece of information lives in exactly one file (see ownership list above)
 - **Preserve format**: Do not change section structure or table formats
-- **Canonical source**: `project-nav.md` is the single source of truth for project overview, architecture, and navigation
+- **Canonical deep reference**: `project-nav.md` is the single source of truth for conventions, snippets, maps, and external links
+- **Repo-relative paths**: no `</workspace/.../>` angle brackets
 - **Language-agnostic**: Adapt to the project's language and ecosystem
 - **Include only applicable sections**: Server, Plugins, UI, and Apps sections are optional — include only if the project has them

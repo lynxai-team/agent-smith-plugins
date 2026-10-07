@@ -2,8 +2,9 @@
 name: update-codebase-summary
 description: use when asked to create or update the codebase summary documentation for a module or package
 ---
+# Update Codebase Summary
 
-This skill describes the workflow to create or update a codebase summary file (`.agents/documentation/codebase-summary.md`) for any module, package, or repository.
+Workflow to create or update a codebase summary file (`.agents/documentation/codebase-summary.md`) for any module, package, or repository.
 
 ## Workflow
 
@@ -37,16 +38,23 @@ One sentence: what the module does and why it exists.
 | `<src/path>` | One-line: what the file does conceptually |
 
 ## Architecture
-- 2–4 bullet points on main design patterns and data flow.
+- 2–4 terse bullets on main design patterns and data flow (machine-readable, no prose)
 
 ## Related
-- See `<related-module>` — how they work together
+- See `<related-module>` — how they work together (pointer only)
 ```
+
+## De-Duplication Constraints (ownership map)
+
+- **Summary**: one line only — do not restate the mission or capabilities from `AGENTS.md` / `project-overview.md`.
+- **Architecture**: terse bullets only. Full architecture prose and conventions live in `project-nav.md` § Key Conventions & Patterns — point there when more detail is needed; never copy them here.
+- **Related**: pointers to sibling modules and root docs only.
+- **No "Documentation" section** — the internal doc map lives in `AGENTS.md`; external links live only in `project-nav.md` § Documentation Links.
+- **No project description** — that belongs in `project-overview.md`.
 
 ## Rules
 
-- **Preserve format**: The 7-section structure is standardized — do not change it
-- **Information-dense**: Keep the file short and condensed
-- **No project description**: That belongs in `project-overview.md`
-- **No architecture patterns duplicated from project-nav.md**
-- **Language-agnostic**: Adapt to the project's language and ecosystem
+- **Preserve format**: The 7-section structure is standardized — do not change it.
+- **Information-dense**: Keep the file short and condensed; tables, bullets, one-line descriptions.
+- **Repo-relative paths**: use repo-relative paths (no `</workspace/.../>` angle brackets).
+- **Language-agnostic**: Adapt to the project's language and ecosystem.
