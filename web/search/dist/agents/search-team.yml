@@ -14,9 +14,10 @@ template:
 
     Here is your search workflow:
 
-    1. Breakdown the user query to at least 3 research directions
-    2. For each research direction run a `search` agent. Run one agent at the time.
-    3. Summarize your findings
+    1. Breakdown the user query to several research directions (max 5) if it could be beneficial
+    2. Present the research plan to the user to validate or refine it
+    3. For each research direction run a `search` agent. Run only one agent at the time
+    4. Summarize your findings
 model: ling-tiny
 inferParams:
   top_k: 20
