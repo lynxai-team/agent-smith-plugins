@@ -21,32 +21,18 @@ async function action(args, options) {
     }
     const box = new CodeBox({
         image: 'python:slim',
-        name: "pythondata",
-        diskSizeGb: 2,
+        name: "codebox",
+        cpus: 2,
+        diskSizeGb: 10,
         memoryMib: 8192,
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
         workingDir: "/workspace",
-        homeDir: "/workspace",
-        //network: { "mode": "disabled" },
+        network: { "mode": "disabled" },
         reuseExisting: true,
     });
-    process.on('SIGINT', () => {
-        box.getInfo().then(info => {
-            //console.log("INFO", info);
-            if (info.state.running) {
-                if (options?.debug || options?.verbose) {
-                    console.log('\nExiting shell box');
-                }
-                box.stop().then(() => process.exit(0));
-            }
-            else {
-                process.exit(0);
-            }
-        });
-    });
-    //await box.installPackages("numpy", "pandas");
+    process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     if (args?.packages) {
         await box.installPackages(...args.packages.split(","));
     }

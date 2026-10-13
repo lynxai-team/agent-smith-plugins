@@ -25,30 +25,15 @@ async function action(args, options) {
     const box = await runtime.create({
         image: 'timbru31/node-alpine-git',
         workingDir: "/workspace",
-        homeDir: "/workspace",
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
-        memoryMib: 2048,
         diskSizeGb: 2,
-        //network: { "mode": "disabled" },
-        reuseExisting: true,
-        //autoRemove: true,
+        memoryMib: 2048,
+        network: { "mode": "disabled" },
+        autoDelete: 0,
     });
-    process.on('SIGINT', () => {
-        box.getInfo().then(info => {
-            //console.log("INFO", info);
-            if (info.state.running) {
-                if (options?.debug || options?.verbose) {
-                    console.log('\nExiting shell box');
-                }
-                box.stop().then(() => process.exit(0));
-            }
-            else {
-                process.exit(0);
-            }
-        });
-    });
+    process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     const stdOutBuf = new Array();
     const stdErrBuf = new Array();
     let res = "";

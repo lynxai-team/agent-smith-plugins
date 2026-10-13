@@ -23,32 +23,18 @@ async function action(args, options) {
     //console.log("Cmd:", cmd, cmdArgs);
     const runtime = JsBoxlite.withDefaultConfig();
     const box = await runtime.create({
+        //image: 'golang:1.26',
         image: "cimg/go:1.25-node",
         workingDir: "/workspace",
-        homeDir: "/workspace",
         volumes: [
             { hostPath: location, guestPath: '/workspace' },
         ],
-        memoryMib: 2048,
         diskSizeGb: 2,
-        //network: { "mode": "disabled" },
-        //autoRemove: true,
-        reuseExisting: true,
+        memoryMib: 2048,
+        network: { "mode": "disabled" },
+        autoDelete: 0,
     });
-    process.on('SIGINT', () => {
-        box.getInfo().then(info => {
-            //console.log("INFO", info);
-            if (info.state.running) {
-                if (options?.debug || options?.verbose) {
-                    console.log('\nExiting shell box');
-                }
-                box.stop().then(() => process.exit(0));
-            }
-            else {
-                process.exit(0);
-            }
-        });
-    });
+    process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     const stdOutBuf = new Array();
     const stdErrBuf = new Array();
     let res = "";

@@ -28,11 +28,11 @@ async function action(args: Record<string, any>, options: Record<string, any>) {
         volumes: [
             { hostPath: location, guestPath: '/workspace', readOnly: true },
         ],
-        //network: { "mode": "disabled" },
-        //reuseExisting: true,
-        //autoRemove: true,
+        memoryMib: 2048,
+        network: { "mode": "disabled" },
+        autoDelete: 0,
     });
-    //process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
+    process.on('SIGINT', () => box.stop().then(() => process.exit(0)));
     const stdOutBuf = new Array<string>();
     const stdErrBuf = new Array<string>();
     let res = "";
