@@ -45,8 +45,10 @@ async function action(args, options) {
             return "Please use the --headed flag so he user can see the operations";
         }
     }
-    console.log("Executing playwright-cli", vars.join(" "));
-    const res = await utils.execute("playwright-cli", vars);
+    const env = { "cwd": options.variables.workspace };
+    //console.log("ENV", env);
+    console.log("Executing playwright-cli", vars);
+    const res = await utils.execute("playwright-cli", vars, env);
     if (ar[0] == "screenshot") {
         return "Screenshot saved";
     }

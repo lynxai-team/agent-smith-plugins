@@ -16,8 +16,7 @@ async function action(args, options) {
         args.command = args.command.replace("playwright-cli", "").trim();
     }
     const ar = parseArgsStringToArgv(args.command.replaceAll("\\", ""));
-    if (options?.variables?.workspace) {
-    } else {
+    if (!options?.variables?.workspace) {
         throw new Error("no workspace var");
     }
     //write only in workspace
@@ -42,8 +41,10 @@ async function action(args, options) {
         }
         vars.push(a);
     });
+    const env = { "cwd": options.variables.workspace };
+    //console.log("ENV", env);
     console.log("Executing playwright-cli", vars);
-    const res = await utils.execute("playwright-cli", vars);
+    const res = await utils.execute("playwright-cli", vars, env);
     if (ar[0] == "screenshot") {
         return "Screenshot saved";
     }

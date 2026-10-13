@@ -50,12 +50,13 @@ async function action(args, options) {
     });
     console.log("Executing playwright-cli playbook", vars.length, "operations:");
     const endRes = [];
+    const env = { "cwd": options.variables.workspace };
     for (const v of vars) {
         const errBuf = [];
         //console.log("Executing", v);
         const execArgs = parseArgsStringToArgv(v.trim());
         console.log("Executing", execArgs);
-        let r = await utils.execute("playwright-cli", execArgs, {
+        let r = await utils.execute("playwright-cli", execArgs, env, {
             onStderr: (e) => errBuf.push(e.toString())
         });
         if (errBuf.length > 0) {

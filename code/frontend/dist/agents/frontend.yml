@@ -30,6 +30,6 @@ toolsList:
   - shell
   - python
   - load-skill
-  - read-webpage
+  - query-webpages
   - load-image
   - playwright-cli
