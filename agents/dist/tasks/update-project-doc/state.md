@@ -35,7 +35,6 @@
 
 ## Notes
 - Read `notes.md` for additional context, rules, and related skills
-- Next: Phase 1, Step 1.1
 - This task creates documentation to help AI agents navigate a codebase
 - Execute phases in order — each phase depends on the previous one
 - Load `update-codebase-summary` skill during Phase 5

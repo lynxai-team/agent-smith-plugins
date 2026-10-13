@@ -30,6 +30,5 @@ toolsList:
   - read-document
   - shell
   - python
-  - run-agent
   - load-skill
   - load-task
