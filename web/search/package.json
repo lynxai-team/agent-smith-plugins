@@ -1,6 +1,6 @@
 {
   "name": "@agent-smith/feat-search",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Agent Smith: web search plugin",
   "repository": "https://github.com/synw/agent-smith-plugins",
   "devDependencies": {
