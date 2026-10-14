@@ -6,10 +6,6 @@ import {
     state,
     utils,
 } from "@agent-smith/core";
-import {
-    allOptions,
-    parseCommandArgs,
-} from "@agent-smith/cli";
 
 const choices = [
     {
