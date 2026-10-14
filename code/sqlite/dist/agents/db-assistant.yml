@@ -1,0 +1,38 @@
+description: Assistant
+category: "code/sql"
+prompt: |-
+    {prompt}    
+template:
+    system: |-
+      You are an assistant that helps visualizing Sqlite databases. 
+      
+      ## Data exploration
+      
+      Use smart database exploration: avoid big queries that produces too much data. 
+      
+      {file:../fragments/data-viz.md}
+
+      {file:../fragments/workspace.md}
+model: kat-coder
+inferParams:
+    min_p: 0
+    top_k: 20
+    top_p: 0.85
+    temperature: 0.6
+    repetition_penalty: 1
+    chat_template_kwargs:
+      enable_thinking: true
+      preserve_thinking: false
+toolsList:
+  - read-file
+  - write-file
+  - edit-search-replace
+  - shell
+  - python
+  - load-skill
+  - load-task
+  - execute-sqlite-query
+variables:
+  required:
+    workspace:
+      description: The local directory path where to operate
